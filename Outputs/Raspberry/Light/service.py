@@ -20,23 +20,16 @@ class Service(metaclass=ABCMeta):
         self.sockf = self.sock.makefile("rw")
         self.publish_services()
         for data in self.sockf:
-            order = json.loads(data)
-            action = order.get("action")
-            if action is None:
-                self.send_result("error", "action key is needed")
-                continue
-            del(order["action"])
             try:
+                order = json.loads(data)
+                action = order["action"]
+                del(order["action"])
                 func = getattr(self, "%s_cmd" % action)
-            except AttributeError:
-                self.send_result("error", "%s isn't supported" % action)
-                continue
-            try:
                 func(**order)
-            except TypeError as err:
-                self.send_result("error", str(err))
-                continue
-            self.send_result("ok", "%s success" % action)
+                self.send_result("ok", "%s success" % action)
+            except Exception as err:
+                self.send_result("error", "%s - %s" % (type(err), str(err)))
+
 
     def send(self, msg):
         self.sockf.write(json.dumps(msg))

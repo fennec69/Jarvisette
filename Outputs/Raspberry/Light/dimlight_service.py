@@ -24,7 +24,7 @@ class LightService(Service):
 
     @property
     def supported_services(self):
-        return ["light", "dimligth"]
+        return ["light", "dimlight"]
 
     def light_cmd(self, power):
         if power:

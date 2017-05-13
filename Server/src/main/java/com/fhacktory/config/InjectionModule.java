@@ -1,5 +1,6 @@
 package com.fhacktory.config;
 
+import com.fhacktory.inputs.endpoints.InputSocketEndpoint;
 import com.fhacktory.outputs.endpoints.OutputSocketEndpoint;
 import com.google.inject.AbstractModule;
 
@@ -17,5 +18,6 @@ public class InjectionModule extends AbstractModule {
 
     private void initEndpoints() {
         bind(OutputSocketEndpoint.class);
+        bind(InputSocketEndpoint.class);
     }
 }

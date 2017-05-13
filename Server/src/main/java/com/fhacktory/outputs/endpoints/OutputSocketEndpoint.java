@@ -25,7 +25,6 @@ public class OutputSocketEndpoint {
     @OnMessage
     public void onWebSocketText(Session session, String message) {
         System.out.println("Received TEXT message: " + message);
-        session.getAsyncRemote().sendText("{\"action\":\"light\", \"power\":true}");
     }
 
     @OnClose

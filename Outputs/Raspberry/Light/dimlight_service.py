@@ -19,7 +19,7 @@ class LightService(Service):
     def __init__(self, gpio, *args, **kwargs):
         super().__init__(*args, **kwargs)
         GPIO.setup(gpio, GPIO.OUT, initial=GPIO.LOW) 
-        self.pwm = GPIO.PWM(gpio, 50)  # frequency=50Hz
+        self.pwm = GPIO.PWM(gpio, 100)  # frequency=100Hz
         self.pwm.start(0)
 
     @property

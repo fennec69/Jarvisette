@@ -1,47 +1,53 @@
 #!/usr/bin/env python3
 
+import asyncio
 import json
-import socket
+import websockets
 from abc import ABCMeta, abstractmethod
 
 
 class Service(metaclass=ABCMeta):
-    def __init__(self, ip, port):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.ip = ip
+    def __init__(self, host, port):
+        self.host = host
         self.port = port
+        self.uuid = "TODO"
+
+    async def send(self, websocket, msg):
+        await websocket.send(json.dumps(msg))
+
+    async def register(self, websocket):
+        await self.send(websocket, {"services": self.supported_services})
+
+    async def send_result(self, websocket, exit_code, msg):
+        await self.send(websocket, {"exit_code": exit_code, "msg": msg})
+
+    async def get_message(self, websocket):
+        data = await websocket.recv()
+        return json.loads(data)
+
+    async def run(self):
+        url = "ws://{host}:{port}/output/{uuid}".format(host=self.host,
+                                                        port=self.port,
+                                                        uuid=self.uuid)
+        async with websockets.connect(url) as websocket:
+            await self.register(websocket)
+            #if True:
+            while True:
+                try:
+                    order = await self.get_message(websocket)
+                    action = order["action"]
+                    del(order["action"])
+                    func = getattr(self, "%s_cmd" % action)
+                    func(**order)
+                    await self.send_result(websocket, "ok", "%s success" % action)
+                except Exception as err:
+                    print(err)
+                    await self.send_result(websocket, "error", "%s - %s" % (type(err), str(err)))
 
     def run_forever(self):
-        try:
-            self.sock.connect((self.ip, self.port))
-        except socket.error:
-            print("Can't connect to %s:%d" % (self.ip, self.port))
-            return
-        self.sockf = self.sock.makefile("rw")
-        self.publish_services()
-        for data in self.sockf:
-            try:
-                order = json.loads(data)
-                action = order["action"]
-                del(order["action"])
-                func = getattr(self, "%s_cmd" % action)
-                func(**order)
-                self.send_result("ok", "%s success" % action)
-            except Exception as err:
-                self.send_result("error", "%s - %s" % (type(err), str(err)))
-
-
-    def send(self, msg):
-        self.sockf.write(json.dumps(msg))
-        self.sockf.flush()
-
-    def send_result(self, exit_code, msg):
-        self.send({"exit_code": exit_code, "msg": msg})
+        asyncio.get_event_loop().run_until_complete(self.run())
 
     @property
     @abstractmethod
     def supported_services(self):
         pass
-
-    def publish_services(self):
-        self.send({"services": self.supported_services})

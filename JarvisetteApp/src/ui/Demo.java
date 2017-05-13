@@ -16,10 +16,12 @@ import android.widget.Toast;
 
 import ai.kitt.snowboy.AppResCopy;
 import ai.kitt.snowboy.MsgEnum;
-import ai.kitt.snowboy.audio.AudioDataSaver;
+import ai.kitt.snowboy.audio.AudioDataToServer;
 import ai.kitt.snowboy.audio.HotwordDetectionThread;
 import ai.kitt.snowboy.audio.RecordingInstructionThread;
 import ai.kitt.snowboy.demo.R;
+import manager.ConnectionManager;
+import manager.PermissionManager;
 
 
 public class Demo extends Activity {
@@ -43,11 +45,14 @@ public class Demo extends Activity {
         
         setProperVolume();
 
-          AppResCopy.copyResFromAssetsToSD(this);
+        PermissionManager.verifyStoragePermissions(this);
+        AppResCopy.copyResFromAssetsToSD(this);
         
         activeTimes = 0;
         mHotwordDetectionThread = new HotwordDetectionThread(handle);
-        mRecordingInstructionThread = new RecordingInstructionThread(handle, new AudioDataSaver());
+        mRecordingInstructionThread = new RecordingInstructionThread(handle, new AudioDataToServer());
+
+        ConnectionManager.getInstance();
     }
     
     void showToast(CharSequence msg) {

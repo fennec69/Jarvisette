@@ -59,6 +59,6 @@ public class AppResCopy {
     }
 
     public static void copyResFromAssetsToSD(Context context) {
-        copyFilesFromAssets(context, Constants.ASSETS_RES_DIR, envWorkSpace+"/", true);
+        copyFilesFromAssets(context, Constants.ASSETS_RES_DIR, envWorkSpace+"/", false);
     }
 }

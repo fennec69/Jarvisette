@@ -10,6 +10,7 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM) 
 
 parser = argparse.ArgumentParser(description='Raspberry Light service')
+parser.add_argument('--uuid', type=str, help='Uniq ID of the service', required=True)
 parser.add_argument('--host', type=str, default="127.0.0.1", help='Server Host')
 parser.add_argument('--port', type=int, default=8080, help='Server Port')
 parser.add_argument('--gpio', type=int, default=2, help='Server Port')
@@ -34,5 +35,5 @@ class LightService(Service):
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    service = LightService(gpio=args.gpio, host=args.host, port=args.port)
+    service = LightService(gpio=args.gpio, host=args.host, port=args.port, uuid=args.uuid)
     service.run_forever()

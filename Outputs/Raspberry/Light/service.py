@@ -7,10 +7,10 @@ from abc import ABCMeta, abstractmethod
 
 
 class Service(metaclass=ABCMeta):
-    def __init__(self, host, port):
+    def __init__(self, host, port, uuid):
         self.host = host
         self.port = port
-        self.uuid = "TODO"
+        self.uuid = uuid
 
     async def send(self, websocket, msg):
         await websocket.send(json.dumps(msg))
@@ -31,7 +31,6 @@ class Service(metaclass=ABCMeta):
                                                         uuid=self.uuid)
         async with websockets.connect(url) as websocket:
             await self.register(websocket)
-            #if True:
             while True:
                 try:
                     order = await self.get_message(websocket)

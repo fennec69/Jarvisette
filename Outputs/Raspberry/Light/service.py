@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 
-import argparse
 import json
 import socket
 from abc import ABCMeta, abstractmethod
-
-parser = argparse.ArgumentParser(description='Raspberry Light service')
-parser.add_argument('--ip', type=str, default="127.0.0.1", help='Server IP')
-parser.add_argument('--port', type=int, default=8080, help='Server Port')
-parser.add_argument('--gpio', type=int, default=2, help='Server Port')
 
 
 class Service(metaclass=ABCMeta):
@@ -20,7 +14,7 @@ class Service(metaclass=ABCMeta):
     def run_forever(self):
         try:
             self.sock.connect((self.ip, self.port))
-        except ConnectionRefusedError:
+        except socket.error:
             print("Can't connect to %s:%d" % (self.ip, self.port))
             return
         self.sockf = self.sock.makefile("rw")
@@ -37,7 +31,11 @@ class Service(metaclass=ABCMeta):
             except AttributeError:
                 self.send_result("error", "%s isn't supported" % action)
                 continue
-            func(**order)
+            try:
+                func(**order)
+            except TypeError as err:
+                self.send_result("error", str(err))
+                continue
             self.send_result("ok", "%s success" % action)
 
     def send(self, msg):
@@ -54,21 +52,3 @@ class Service(metaclass=ABCMeta):
 
     def publish_services(self):
         self.send({"services": self.supported_services})
-
-
-class LightService(Service):
-    def __init__(self, gpio, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    @property
-    def supported_services(self):
-        return ["light"]
-
-    def light_cmd(self, power):
-        print("LIGHT_CMD :%s" %  power)
-
-
-if __name__ == "__main__":
-    args = parser.parse_args()
-    service = LightService(gpio=args.gpio, ip=args.ip, port=args.port)
-    service.run_forever()

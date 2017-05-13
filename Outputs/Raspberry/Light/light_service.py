@@ -6,6 +6,7 @@ import RPi.GPIO as GPIO
 from service import Service
 
 
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM) 
 
 parser = argparse.ArgumentParser(description='Raspberry Light service')

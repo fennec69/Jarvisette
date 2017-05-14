@@ -44,20 +44,24 @@ class ServiceManager:
         url = "ws://{host}:{port}/output/{uuid}".format(host=self.host,
                                                         port=self.port,
                                                         uuid=self.uuid)
-        async with websockets.connect(url) as websocket:
-            await self.register(websocket)
-            while True:
-                try:
-                    order = await self.get_message(websocket)
-                    action = order["action"]
-                    del(order["action"])
-                    handler = self.services[action]
-                    func = getattr(handler, "%s_cmd" % action)
-                    func(**order)
-                    await self.send_result(websocket, "ok", "%s success" % action)
-                except Exception as err:
-                    print(err)
-                    await self.send_result(websocket, "error", "%s - %s" % (type(err), str(err)))
+        while True:
+            try:
+                async with websockets.connect(url) as websocket:
+                    await self.register(websocket)
+                    while True:
+                        try:
+                            order = await self.get_message(websocket)
+                            action = order["action"]
+                            del(order["action"])
+                            handler = self.services[action]
+                            func = getattr(handler, "%s_cmd" % action)
+                            func(**order)
+                            await self.send_result(websocket, "ok", "%s success" % action)
+                        except Exception as err:
+                            print(err)
+                            await self.send_result(websocket, "error", "%s - %s" % (type(err), str(err)))
+            except websockets.exceptions.ConnectionClosed:
+                pass
 
     def run_forever(self):
         asyncio.get_event_loop().run_until_complete(self.run())

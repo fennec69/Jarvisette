@@ -34,7 +34,7 @@ public class AudioMessageProcessor {
                 @Override
                 public void run() {
                     for(String uuid : mSignalBuffer.keySet()) {
-                        System.out.println(uuid);
+                        System.out.println("Message received: " + uuid);
                     }
                     OutputActionProcessor outputActionFinder = new OutputActionProcessor();
                     outputActionFinder.processAudioMessages(new TreeMap<>(mSignalBuffer));

@@ -1,4 +1,4 @@
-package com.fhacktory.action_detector.dtos;
+package com.fhacktory.action_detector.apiai.dtos;
 
 /**
  * Created by farid on 14/05/2017.

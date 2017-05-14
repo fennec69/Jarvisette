@@ -1,8 +1,9 @@
 package com.fhacktory.communication.outputs;
 
-import com.fhacktory.communication.outputs.lights.LightPowerActionDto;
-import com.fhacktory.communication.outputs.music.MusicActionDto;
-import com.fhacktory.communication.outputs.tts.TtsActionDto;
+import com.fhacktory.communication.outputs.lights.LightPowerOutputActionDto;
+import com.fhacktory.communication.outputs.music.MusicOutputActionDto;
+import com.fhacktory.communication.outputs.tts.TtsOutputActionDto;
+import com.fhacktory.data.entities.ActionType;
 
 import java.util.Map;
 
@@ -11,24 +12,24 @@ import java.util.Map;
  */
 public class ActionDtoFactory {
 
-    public static ActionDto createActionDto(String action, Map<String, String> parameters) {
+    public static OutputActionDto createActionDto(String action, Map<String, String> parameters) {
         switch (action.toLowerCase()) {
-            case "light":
+            case ActionType.LIGHT:
                 if(parameters.containsKey("power")) {
                     boolean power = parameters.get("power").equals("on");
-                    ActionDto actionDto = new LightPowerActionDto(power);
-                    return actionDto;
+                    OutputActionDto outputActionDto = new LightPowerOutputActionDto(power);
+                    return outputActionDto;
                 }
                 break;
-            case "tts":
+            case ActionType.TTS:
                 if(parameters.containsKey("speech")) {
-                    ActionDto actionDto = new TtsActionDto(parameters.get("speech"));
-                    return actionDto;
+                    OutputActionDto outputActionDto = new TtsOutputActionDto(parameters.get("speech"));
+                    return outputActionDto;
                 }
                 break;
-            case "music":
-                ActionDto actionDto = new MusicActionDto();
-                return actionDto;
+            case ActionType.MUSIC:
+                OutputActionDto outputActionDto = new MusicOutputActionDto();
+                return outputActionDto;
         }
         return null;
     }

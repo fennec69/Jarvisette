@@ -1,7 +1,7 @@
-package com.fhacktory.action_detector.endpoints;
+package com.fhacktory.action_detector.apiai.endpoints;
 
-import com.fhacktory.action_detector.dtos.ApiAiRequestDto;
-import com.fhacktory.action_detector.dtos.ApiAiResponseDto;
+import com.fhacktory.action_detector.apiai.dtos.ApiAiRequestDto;
+import com.fhacktory.action_detector.apiai.dtos.ApiAiResponseDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;

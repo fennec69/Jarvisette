@@ -1,16 +1,17 @@
 package com.fhacktory.communication.outputs.lights;
 
-import com.fhacktory.communication.outputs.ActionDto;
+import com.fhacktory.communication.outputs.OutputActionDto;
+import com.fhacktory.data.entities.ActionType;
 
 /**
  * Created by farid on 13/05/2017.
  */
-public class DimlightActionDto extends ActionDto {
+public class DimlightOutputActionDto extends OutputActionDto {
 
     private int dimpercent;
 
-    public DimlightActionDto(int dimPercent) {
-        super("dimlight");
+    public DimlightOutputActionDto(int dimPercent) {
+        super(ActionType.DIMLIGHT);
         setDimpercent(dimPercent);
     }
 

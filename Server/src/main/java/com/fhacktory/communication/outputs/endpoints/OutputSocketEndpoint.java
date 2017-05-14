@@ -48,6 +48,7 @@ public class OutputSocketEndpoint {
         if(sessions.containsKey(uuid)) {
             Session session = sessions.get(uuid);
             session.getAsyncRemote().sendText(message);
+            System.out.println("Message sent to:" + uuid + " " + message);
             return true;
         }
         return false;

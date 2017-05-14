@@ -3,10 +3,10 @@ package com.fhacktory.communication.outputs;
 /**
  * Created by farid on 13/05/2017.
  */
-public class ActionDto {
+public class OutputActionDto {
     private String action;
 
-    public ActionDto(String action) {
+    public OutputActionDto(String action) {
         this.action = action;
     }
 

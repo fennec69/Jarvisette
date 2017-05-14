@@ -1,16 +1,17 @@
 package com.fhacktory.communication.outputs.lights;
 
-import com.fhacktory.communication.outputs.ActionDto;
+import com.fhacktory.communication.outputs.OutputActionDto;
+import com.fhacktory.data.entities.ActionType;
 
 /**
  * Created by farid on 13/05/2017.
  */
-public class LightPowerActionDto extends ActionDto {
+public class LightPowerOutputActionDto extends OutputActionDto {
 
     private boolean power;
 
-    public LightPowerActionDto(boolean power) {
-        super("light");
+    public LightPowerOutputActionDto(boolean power) {
+        super(ActionType.LIGHT);
         setPower(power);
     }
 

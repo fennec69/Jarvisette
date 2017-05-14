@@ -22,7 +22,7 @@ import ai.kitt.snowboy.MsgEnum;
 public class RecordingInstructionThread {
 
     private static final String TAG = RecordingInstructionThread.class.getSimpleName();
-    private static final long LISTENING_TIME = 5 * 1000;
+    private static final long LISTENING_TIME = 3 * 1000;
 
     private AudioDataReceivedListener listener = null;
     private Handler handler = null;

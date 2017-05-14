@@ -54,7 +54,7 @@ public class ConnectionManager {
     }
 
     public void sendAudioSignal(AudioSignalDto audioSignalDto) {
-        mEndpoint.sendAudioSignal(UUID_TEST_MOTOROLA, audioSignalDto)
+        mEndpoint.sendAudioSignal(UUID_TEST_SAMSUNG, audioSignalDto)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

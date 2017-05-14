@@ -34,8 +34,7 @@ public class AudioDataToServer implements AudioDataReceivedListener  {
 
     @Override
     public void stop() {
-//        String audioString = Base64.encodeToString(mByteArrayOutputStream.toByteArray(), Base64.NO_WRAP);
-        String audioString = "Lol";
+        String audioString = Base64.encodeToString(mByteArrayOutputStream.toByteArray(), Base64.NO_WRAP);
         AudioSignalDto audioSignalDto = new AudioSignalDto(audioString);
         mConnectionManager.sendAudioSignal(audioSignalDto);
     }

@@ -42,7 +42,7 @@ public class HotwordDetectionThread {
         //-detector.SetAudioGain(1);
         detector.ApplyFrontend(true);
         try {
-            player.setDataSource(strEnvWorkSpace+"ah.wav");
+            player.setDataSource(strEnvWorkSpace+"hi.wav");
             player.prepare();
         } catch (IOException e) {
             Log.e(TAG, "Playing ding sound error", e);

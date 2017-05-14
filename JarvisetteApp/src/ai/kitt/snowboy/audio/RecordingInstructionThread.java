@@ -36,7 +36,7 @@ public class RecordingInstructionThread {
         this.handler = handler;
         this.listener = listener;
         try {
-            player.setDataSource(strEnvWorkSpace+"souffrir.wav");
+            player.setDataSource(strEnvWorkSpace+"roger.wav");
             player.prepare();
         } catch (IOException e) {
             Log.e(TAG, "Playing ding sound error", e);

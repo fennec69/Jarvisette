@@ -1,5 +1,7 @@
 package ai.kitt.snowboy.audio;
 
+import android.util.Base64;
+
 import java.io.ByteArrayOutputStream;
 
 import manager.ConnectionManager;
@@ -32,8 +34,7 @@ public class AudioDataToServer implements AudioDataReceivedListener  {
 
     @Override
     public void stop() {
-//        String audioString = Base64.encodeToString(mByteArrayOutputStream.toByteArray(),Base64.DEFAULT);
-        String audioString = "LooooL";
+        String audioString = Base64.encodeToString(mByteArrayOutputStream.toByteArray(), Base64.NO_WRAP);
         AudioSignalDto audioSignalDto = new AudioSignalDto(audioString);
         mConnectionManager.sendAudioSignal(audioSignalDto);
     }

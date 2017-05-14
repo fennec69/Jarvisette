@@ -17,7 +17,7 @@ import websocket.dto.AudioSignalDto;
 
 public class ConnectionManager {
 
-    private static final String ENDPOINT = "ws://192.168.101.144/input/";
+    private static final String ENDPOINT = "ws://192.168.101.144:8080/input/";
     //TODO: TO BE CHANGED!
     private static final String UUID_TEST = "23";
     private static final String TAG = ConnectionManager.class.getSimpleName();
@@ -63,8 +63,6 @@ public class ConnectionManager {
     }
 
     public void sendAudioSignal(AudioSignalDto audioSignalDto) {
-        mClient.send(new Gson().toJson(audioSignalDto));
-        mClient.send(new Gson().toJson(audioSignalDto));
         mClient.send(new Gson().toJson(audioSignalDto));
     }
 

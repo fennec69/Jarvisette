@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import asyncio
+import logging
 import json
 import websockets
 from abc import ABCMeta, abstractmethod
@@ -31,8 +32,7 @@ class ServiceManager:
     async def register(self, websocket):
         await self.send(websocket, {"services": list(self.services.keys())})
 
-    @staticmethod
-    async def send_result(websocket, exit_code, msg):
+    async def send_result(self, websocket, exit_code, msg):
         await self.send(websocket, {"exit_code": exit_code, "msg": msg})
 
     @staticmethod
@@ -47,9 +47,9 @@ class ServiceManager:
         while True:
             try:
                 async with websockets.connect(url) as websocket:
-                    print("Connected")
+                    logging.info("Connected")
                     await self.register(websocket)
-                    print("Registered")
+                    logging.info("Registered")
                     while True:
                         try:
                             order = await self.get_message(websocket)
@@ -62,12 +62,12 @@ class ServiceManager:
                         except websockets.exceptions.ConnectionClosed:
                             raise
                         except Exception as err:
-                            print(err)
+                            logging.warning(err)
                             await self.send_result(websocket, "error", "%s - %s" % (type(err), str(err)))
             except websockets.exceptions.ConnectionClosed:
-                print("Timeout")
+                logging.warning("Timeout")
             except ConnectionRefusedError:
-                print("Connection refused, sleep 10 sec")
+                logging.warning("Connection refused, sleep 10 sec")
                 await asyncio.sleep(10)
 
     def run_forever(self):

@@ -1,4 +1,4 @@
-package com.fhacktory.communication.inputs.endpoints.audio;
+package com.fhacktory.communication.inputs.dtos;
 
 /**
  * Created by farid on 13/05/2017.

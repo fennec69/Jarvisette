@@ -1,6 +1,5 @@
 package com.fhacktory.processor;
 
-import com.fhacktory.manager.OutputActionFinder;
 import com.fhacktory.utils.SignalUtils;
 
 import java.util.Map;
@@ -13,7 +12,7 @@ import java.util.TreeMap;
  */
 public class AudioMessageProcessor {
 
-    private static final int TIMER_DELAY_IN_MS = 2000;
+    private static final int TIMER_DELAY_IN_MS = 500;
 
     private static final AudioMessageProcessor INSTANCE = new AudioMessageProcessor();
 
@@ -21,7 +20,7 @@ public class AudioMessageProcessor {
     private Timer mTimer;
 
     private AudioMessageProcessor() {
-        mSignalBuffer = new TreeMap<String, AudioMessage>();
+        mSignalBuffer = new TreeMap<>();
     }
 
     public static AudioMessageProcessor getInstance() {
@@ -37,8 +36,8 @@ public class AudioMessageProcessor {
                     for(String uuid : mSignalBuffer.keySet()) {
                         System.out.println(uuid);
                     }
-                    OutputActionFinder outputActionFinder = new OutputActionFinder();
-                    outputActionFinder.processAudioMessages(new TreeMap<String, AudioMessage>(mSignalBuffer));
+                    OutputActionProcessor outputActionFinder = new OutputActionProcessor();
+                    outputActionFinder.processAudioMessages(new TreeMap<>(mSignalBuffer));
                     mSignalBuffer.clear();
                 }
             }, TIMER_DELAY_IN_MS);

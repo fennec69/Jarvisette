@@ -1,6 +1,6 @@
 package com.fhacktory.communication.inputs.endpoints;
 
-import com.fhacktory.communication.inputs.endpoints.audio.AudioSignalDto;
+import com.fhacktory.communication.inputs.dtos.AudioSignalDto;
 import com.fhacktory.communication.outputs.endpoints.OutputSocketEndpoint;
 import com.fhacktory.processor.AudioMessageProcessor;
 import com.google.gson.Gson;
@@ -33,7 +33,7 @@ public class InputSocketEndpoint {
         System.out.println("Received TEXT message: " + message);
         String uuid = session.getPathParameters().get("uuid");
         if(uuid.equals("TEST")) {
-            OutputSocketEndpoint.sendMessage(message, "RASP-JARB-1");
+            OutputSocketEndpoint.sendMessage(message, "R930");
         }
         else {
             if (mGson == null) mGson = new Gson();

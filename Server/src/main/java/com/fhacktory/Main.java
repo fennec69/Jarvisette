@@ -15,6 +15,7 @@ import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainer
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener;
+import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 import org.jfree.ui.RefineryUtilities;
 
 import java.io.IOException;
@@ -38,7 +39,8 @@ public class Main {
         Server server = new Server(8080);
 
         ServletContextHandler servletHandler = new ServletContextHandler();
-
+        servletHandler.addEventListener(injector.getInstance((GuiceResteasyBootstrapServletContextListener.class)));
+        servletHandler.addServlet(HttpServletDispatcher.class, "/*");
         servletHandler.addEventListener(injector.getInstance((GuiceResteasyBootstrapServletContextListener.class)));
         server.setHandler(servletHandler);
 

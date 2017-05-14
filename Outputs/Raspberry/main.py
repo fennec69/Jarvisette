@@ -22,5 +22,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     manager = ServiceManager(host=args.host, port=args.port, uuid=args.uuid)
     manager.add_service(DimLightService(gpio=args.gpio))
-    manager.add_service(TTSService())
+    manager.add_service(TTSService("fr"))
     manager.run_forever()

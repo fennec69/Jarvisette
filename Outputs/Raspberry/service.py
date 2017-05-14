@@ -47,7 +47,9 @@ class ServiceManager:
         while True:
             try:
                 async with websockets.connect(url) as websocket:
+                    print("Connected")
                     await self.register(websocket)
+                    print("Registered")
                     while True:
                         try:
                             order = await self.get_message(websocket)
@@ -57,11 +59,16 @@ class ServiceManager:
                             func = getattr(handler, "%s_cmd" % action)
                             func(**order)
                             await self.send_result(websocket, "ok", "%s success" % action)
+                        except websockets.exceptions.ConnectionClosed:
+                            raise
                         except Exception as err:
                             print(err)
                             await self.send_result(websocket, "error", "%s - %s" % (type(err), str(err)))
             except websockets.exceptions.ConnectionClosed:
-                pass
+                print("Timeout")
+            except ConnectionRefusedError:
+                print("Connection refused, sleep 10 sec")
+                await asyncio.sleep(10)
 
     def run_forever(self):
         asyncio.get_event_loop().run_until_complete(self.run())

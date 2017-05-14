@@ -33,7 +33,7 @@ public class Main {
         InjectionModule injectionModule = new InjectionModule();
         Injector injector = Guice.createInjector(injectionModule);
 
-        Server server = new Server(80);
+        Server server = new Server(8080);
 
         ServletContextHandler servletHandler = new ServletContextHandler();
 

@@ -1,6 +1,8 @@
 package com.fhacktory.inputs.endpoints;
 
 import com.fhacktory.inputs.endpoints.audio.AudioSignalDto;
+import com.fhacktory.outputs.endpoints.OutputSocketEndpoint;
+import com.fhacktory.processor.AudioMessageProcessor;
 import com.fhacktory.utils.SignalUtils;
 import com.google.gson.Gson;
 
@@ -30,10 +32,15 @@ public class InputSocketEndpoint {
     @OnMessage
     public void onWebSocketText(Session session, String message) {
         System.out.println("Received TEXT message: " + message);
-        if(mGson == null) mGson = new Gson();
-        AudioSignalDto audioSignalDto = mGson.fromJson(message, AudioSignalDto.class);
-        double rms = SignalUtils.calculateRMS(audioSignalDto.getSignal());
-        System.out.println("Signal rms: " + String.valueOf(rms));
+        String uuid = session.getPathParameters().get("uuid");
+        if(uuid.equals("TEST")) {
+            OutputSocketEndpoint.sendMessage(message, "RASP-JARB-1");
+        }
+        else {
+            if (mGson == null) mGson = new Gson();
+            AudioSignalDto audioSignalDto = mGson.fromJson(message, AudioSignalDto.class);
+            AudioMessageProcessor.getInstance().onAudioMessageReceived(uuid, audioSignalDto.getSignal());
+        }
     }
 
     @OnClose

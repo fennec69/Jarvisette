@@ -35,16 +35,19 @@ public class GoogleSpeechRecognizer implements SpeechRecognizer {
         mGoogleSpeechEndpoint = mGoogleSpeechRetrofit.create(GoogleSpeechEndpoint.class);
     }
 
-    public String speechToText(byte[] audioData) {
+    public String speechToText(String audioData) {
         GoogleSpeechConfigRequestDto googleSpeechConfigRequestDto = new GoogleSpeechConfigRequestDto(ENCODING, SAMPLE_RATE, LANGUAGE);
-        GoogleSpeechAudioRequestDto googleSpeechAudioRequestDto = new GoogleSpeechAudioRequestDto(Base64.encodeBase64String(audioData));
+        GoogleSpeechAudioRequestDto googleSpeechAudioRequestDto = new GoogleSpeechAudioRequestDto(audioData);
         GoogleSpeechRequestDto googleSpeechRequestDto = new GoogleSpeechRequestDto(googleSpeechConfigRequestDto, googleSpeechAudioRequestDto);
         try {
             Response<GoogleSpeechResponseDto> response = mGoogleSpeechEndpoint.getSpeechRecognitions(googleSpeechRequestDto).execute();
-            if(response.isSuccessful()) {
+            if(response.isSuccessful() && response.body() != null) {
                 GoogleSpeechResponseDto googleSpeechResponseDto = response.body();
                 if(googleSpeechResponseDto != null
+                        && googleSpeechResponseDto != null
+                        && googleSpeechResponseDto.getResults() != null
                         && !googleSpeechResponseDto.getResults().isEmpty()
+                        && googleSpeechResponseDto.getResults().get(0).getAlternatives() != null
                         && !googleSpeechResponseDto.getResults().get(0).getAlternatives().isEmpty()) {
                     GoogleSpeechAlternativeResponseDto alternative = googleSpeechResponseDto.getResults().get(0).getAlternatives().get(0);
                     return alternative.getTranscript();
@@ -53,7 +56,7 @@ public class GoogleSpeechRecognizer implements SpeechRecognizer {
             else {
                 System.out.println(response.errorBody().string());
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

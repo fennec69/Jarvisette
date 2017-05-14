@@ -1,10 +1,9 @@
 package com.fhacktory;
 
-import com.XYSeriesDemo;
+import com.fhacktory.communication.inputs.endpoints.InputSocketEndpoint;
+import com.fhacktory.communication.outputs.endpoints.OutputSocketEndpoint;
 import com.fhacktory.config.InjectionModule;
-import com.fhacktory.inputs.endpoints.InputSocketEndpoint;
-import com.fhacktory.outputs.endpoints.OutputSocketEndpoint;
-import com.fhacktory.utils.SignalUtils;
+import com.fhacktory.data.conf.ConfigLoader;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.eclipse.jetty.server.Server;
@@ -14,12 +13,7 @@ import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainer
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener;
-import org.jfree.ui.RefineryUtilities;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 
 /**
  * Created by farid on 13/05/2017.
@@ -30,13 +24,15 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        ConfigLoader.getInstance().loadFromConfFile();
         InjectionModule injectionModule = new InjectionModule();
         Injector injector = Guice.createInjector(injectionModule);
 
         Server server = new Server(8080);
 
         ServletContextHandler servletHandler = new ServletContextHandler();
-
+        servletHandler.addEventListener(injector.getInstance((GuiceResteasyBootstrapServletContextListener.class)));
+        servletHandler.addServlet(HttpServletDispatcher.class, "/*");
         servletHandler.addEventListener(injector.getInstance((GuiceResteasyBootstrapServletContextListener.class)));
         server.setHandler(servletHandler);
 
@@ -47,37 +43,6 @@ public class Main {
 
         server.start();
         server.join();
-
-       /* SpeechRecognizer speechRecognizer = new GoogleSpeechRecognizer();
-        String test = speechRecognizer.speechToText(data);
-        if(test != null) System.out.println(test);*/
-    }
-
-    private void drawSignal() {
-        final XYSeriesDemo demo = new XYSeriesDemo("XY Series Demo");
-        demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
-        demo.setVisible(true);
-    }
-
-    private void runSampleTest() throws IOException {
-        String fileName = "./sample1.wav";
-        Path path = Paths.get(fileName);
-        System.out.println("Reading file");
-        short[] data = SignalUtils.byteArrayToShortArray(Files.readAllBytes(path));
-        System.out.println(SignalUtils.calculateRMS(data));
-
-        fileName = "./sample2.wav";
-        path = Paths.get(fileName);
-        System.out.println("Reading file");
-        data = SignalUtils.byteArrayToShortArray(Files.readAllBytes(path));
-        System.out.println(SignalUtils.calculateRMS(data));
-
-        fileName = "./sample3.wav";
-        path = Paths.get(fileName);
-        System.out.println("Reading file");
-        data = SignalUtils.byteArrayToShortArray(Files.readAllBytes(path));
-        System.out.println(SignalUtils.calculateRMS(data));
     }
 
     public class JettyWebSocketServlet extends WebSocketServlet {

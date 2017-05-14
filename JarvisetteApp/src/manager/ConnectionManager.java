@@ -1,25 +1,14 @@
 package manager;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
 import com.squareup.okhttp.ResponseBody;
 
-import org.apache.commons.codec.binary.Hex;
-
-import java.io.IOException;
-import java.net.URI;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import webservice.endpoint.WebServerEndpoint;
-import websocket.WebsocketClient;
 import webservice.dto.AudioSignalDto;
+import webservice.endpoint.WebServerEndpoint;
 
 /**
  * Created by Frederic on 13/05/2017.

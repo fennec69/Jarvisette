@@ -5,7 +5,7 @@ import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 
 import manager.ConnectionManager;
-import websocket.dto.AudioSignalDto;
+import webservice.dto.AudioSignalDto;
 
 /**
  * Created by Frederic on 13/05/2017.
@@ -34,7 +34,8 @@ public class AudioDataToServer implements AudioDataReceivedListener  {
 
     @Override
     public void stop() {
-        String audioString = Base64.encodeToString(mByteArrayOutputStream.toByteArray(), Base64.NO_WRAP);
+//        String audioString = Base64.encodeToString(mByteArrayOutputStream.toByteArray(), Base64.NO_WRAP);
+        String audioString = "Lol";
         AudioSignalDto audioSignalDto = new AudioSignalDto(audioString);
         mConnectionManager.sendAudioSignal(audioSignalDto);
     }

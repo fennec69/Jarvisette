@@ -3,13 +3,23 @@ package manager;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.squareup.okhttp.ResponseBody;
 
 import org.apache.commons.codec.binary.Hex;
 
+import java.io.IOException;
 import java.net.URI;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import webservice.endpoint.WebServerEndpoint;
 import websocket.WebsocketClient;
-import websocket.dto.AudioSignalDto;
+import webservice.dto.AudioSignalDto;
 
 /**
  * Created by Frederic on 13/05/2017.
@@ -17,43 +27,23 @@ import websocket.dto.AudioSignalDto;
 
 public class ConnectionManager {
 
-    private static final String ENDPOINT = "ws://192.168.101.144:8080/input/";
+    private static final String ENDPOINT = "http://192.168.101.144:8080/";
     //TODO: TO BE CHANGED!
     private static final String UUID_TEST_SAMSUNG = "Samysamsung";
     private static final String UUID_TEST_MOTOROLA = "Motobruhbruhbruh";
     private static final String TAG = ConnectionManager.class.getSimpleName();
-g
+
     private static ConnectionManager instance;
-    private WebsocketClient mClient;
+    private Retrofit mClient;
+    private WebServerEndpoint mEndpoint;
 
     private ConnectionManager() {
-        mClient = new WebsocketClient(URI.create(ENDPOINT + UUID_TEST_SAMSUNG), new WebsocketClient.Listener() {
-            @Override
-            public void onConnect() {
-                Log.d(TAG, "Connected!");
-            }
 
-            @Override
-            public void onMessage(String message) {
-                Log.d(TAG, String.format("Got string message! %s", message));
-            }
-
-            @Override
-            public void onMessage(byte[] data) {
-                Log.d(TAG, String.format("Got binary message! %s", Hex.encodeHex(data)));
-            }
-
-            @Override
-            public void onDisconnect(int code, String reason) {
-                Log.d(TAG, String.format("Disconnected! Code: %d Reason: %s", code, reason));
-            }
-
-            @Override
-            public void onError(Exception error) {
-                Log.e(TAG, "Error!", error);
-            }
-        }, null);
-        mClient.connect();
+        mClient = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        mEndpoint = mClient.create(WebServerEndpoint.class);
     }
 
     public static ConnectionManager getInstance() {
@@ -64,7 +54,18 @@ g
     }
 
     public void sendAudioSignal(AudioSignalDto audioSignalDto) {
-        mClient.send(new Gson().toJson(audioSignalDto));
+        mEndpoint.sendAudioSignal(UUID_TEST_MOTOROLA, audioSignalDto)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        System.out.println(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
     }
 
 }

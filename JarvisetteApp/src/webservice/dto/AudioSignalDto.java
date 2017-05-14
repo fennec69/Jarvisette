@@ -1,4 +1,4 @@
-package websocket.dto;
+package webservice.dto;
 
 /**
  * Created by Frederic on 13/05/2017.
@@ -11,6 +11,7 @@ public class AudioSignalDto {
     public AudioSignalDto(String signal) {
         this.signal = signal;
     }
+
 
     public String getSignal(){
         return signal;

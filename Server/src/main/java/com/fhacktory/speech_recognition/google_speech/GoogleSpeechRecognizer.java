@@ -35,9 +35,9 @@ public class GoogleSpeechRecognizer implements SpeechRecognizer {
         mGoogleSpeechEndpoint = mGoogleSpeechRetrofit.create(GoogleSpeechEndpoint.class);
     }
 
-    public String speechToText(byte[] audioData) {
+    public String speechToText(String audioData) {
         GoogleSpeechConfigRequestDto googleSpeechConfigRequestDto = new GoogleSpeechConfigRequestDto(ENCODING, SAMPLE_RATE, LANGUAGE);
-        GoogleSpeechAudioRequestDto googleSpeechAudioRequestDto = new GoogleSpeechAudioRequestDto(Base64.encodeBase64String(audioData));
+        GoogleSpeechAudioRequestDto googleSpeechAudioRequestDto = new GoogleSpeechAudioRequestDto(audioData);
         GoogleSpeechRequestDto googleSpeechRequestDto = new GoogleSpeechRequestDto(googleSpeechConfigRequestDto, googleSpeechAudioRequestDto);
         try {
             Response<GoogleSpeechResponseDto> response = mGoogleSpeechEndpoint.getSpeechRecognitions(googleSpeechRequestDto).execute();

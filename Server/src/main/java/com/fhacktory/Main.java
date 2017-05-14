@@ -2,8 +2,9 @@ package com.fhacktory;
 
 import com.XYSeriesDemo;
 import com.fhacktory.config.InjectionModule;
-import com.fhacktory.inputs.endpoints.InputSocketEndpoint;
-import com.fhacktory.outputs.endpoints.OutputSocketEndpoint;
+import com.fhacktory.communication.inputs.endpoints.InputSocketEndpoint;
+import com.fhacktory.communication.outputs.endpoints.OutputSocketEndpoint;
+import com.fhacktory.data.conf.ConfigLoader;
 import com.fhacktory.utils.SignalUtils;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -30,6 +31,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        ConfigLoader.getInstance().loadFromConfFile();
         InjectionModule injectionModule = new InjectionModule();
         Injector injector = Guice.createInjector(injectionModule);
 

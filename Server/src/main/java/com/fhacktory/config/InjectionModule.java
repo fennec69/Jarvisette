@@ -1,7 +1,7 @@
 package com.fhacktory.config;
 
-import com.fhacktory.inputs.endpoints.InputSocketEndpoint;
-import com.fhacktory.outputs.endpoints.OutputSocketEndpoint;
+import com.fhacktory.communication.inputs.endpoints.InputSocketEndpoint;
+import com.fhacktory.communication.outputs.endpoints.OutputSocketEndpoint;
 import com.google.inject.AbstractModule;
 
 /**

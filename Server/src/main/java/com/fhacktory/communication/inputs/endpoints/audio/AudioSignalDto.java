@@ -1,4 +1,4 @@
-package com.fhacktory.inputs.endpoints.audio;
+package com.fhacktory.communication.inputs.endpoints.audio;
 
 /**
  * Created by farid on 13/05/2017.

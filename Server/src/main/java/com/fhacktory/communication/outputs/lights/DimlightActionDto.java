@@ -1,6 +1,6 @@
-package com.fhacktory.outputs.lights;
+package com.fhacktory.communication.outputs.lights;
 
-import com.fhacktory.outputs.ActionDto;
+import com.fhacktory.communication.outputs.ActionDto;
 
 /**
  * Created by farid on 13/05/2017.

@@ -1,4 +1,4 @@
-package com.fhacktory.outputs;
+package com.fhacktory.communication.outputs;
 
 /**
  * Created by farid on 13/05/2017.

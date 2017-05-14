@@ -1,5 +1,6 @@
 package com.fhacktory.processor;
 
+import com.fhacktory.manager.OutputActionFinder;
 import com.fhacktory.utils.SignalUtils;
 
 import java.util.Map;
@@ -36,8 +37,9 @@ public class AudioMessageProcessor {
                     for(String uuid : mSignalBuffer.keySet()) {
                         System.out.println(uuid);
                     }
+                    OutputActionFinder outputActionFinder = new OutputActionFinder();
+                    outputActionFinder.processAudioMessages(new TreeMap<String, AudioMessage>(mSignalBuffer));
                     mSignalBuffer.clear();
-                    //TODO: process decision maker
                 }
             }, TIMER_DELAY_IN_MS);
         }

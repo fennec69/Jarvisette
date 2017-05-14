@@ -41,13 +41,18 @@ public class Demo extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main);
+        if(PermissionManager.verifyStoragePermissions(this)) {
+            init();
+        }
+    }
+
+    private void init() {
         setUI();
-        
+
         setProperVolume();
 
-        PermissionManager.verifyStoragePermissions(this);
         AppResCopy.copyResFromAssetsToSD(this);
-        
+
         activeTimes = 0;
         mHotwordDetectionThread = new HotwordDetectionThread(handle);
         mRecordingInstructionThread = new RecordingInstructionThread(handle, new AudioDataToServer());
@@ -125,6 +130,7 @@ public class Demo extends Activity {
         record_button.setEnabled(true);
         updateLog(" ----> instruction stopped ", "blue");
         record_button.setText(R.string.btn1_start);
+        startWaitingForHotword();
     }
 
     private void sleep() {

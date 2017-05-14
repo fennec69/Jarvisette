@@ -19,14 +19,15 @@ public class ConnectionManager {
 
     private static final String ENDPOINT = "ws://192.168.101.144:8080/input/";
     //TODO: TO BE CHANGED!
-    private static final String UUID_TEST = "23";
+    private static final String UUID_TEST_SAMSUNG = "Samysamsung";
+    private static final String UUID_TEST_MOTOROLA = "Motobruhbruhbruh";
     private static final String TAG = ConnectionManager.class.getSimpleName();
-
+g
     private static ConnectionManager instance;
     private WebsocketClient mClient;
 
     private ConnectionManager() {
-        mClient = new WebsocketClient(URI.create(ENDPOINT + UUID_TEST), new WebsocketClient.Listener() {
+        mClient = new WebsocketClient(URI.create(ENDPOINT + UUID_TEST_SAMSUNG), new WebsocketClient.Listener() {
             @Override
             public void onConnect() {
                 Log.d(TAG, "Connected!");

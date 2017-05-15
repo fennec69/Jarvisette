@@ -52,19 +52,22 @@ public class OutputActionProcessor {
             if (outputActionDto != null) {
                 OutputSocketEndpoint.sendMessage(mGson.toJson(outputActionDto), closestDevice.getUUID());
             }
-            computeOutputSpeechResponseIfPossibe(myLocation, action.getResponseSpeech());
+
         }
         else {
             System.out.println("Output device found: " + closestDevice != null);
             System.out.println("Command action found: " + action != null);
         }
+        if(action != null) computeOutputSpeechResponseIfPossibe(myLocation, action.getResponseSpeech());
     }
 
     //Shitty code
     private OutputDevice findOutputDevice(AudioLocation audioLocation, CommandAction action) {
         if(audioLocation == null || action == null) return null;
         String uuid;
-        if (!action.getParameters().get("number").isEmpty()) {
+        if (action.getParameters() != null
+                && !action.getParameters().isEmpty()
+                && !action.getParameters().get("number").isEmpty()) {
             uuid = "RASP-JARB-" + action.getParameters().get("number");
             return ConfigLoader.getInstance().getOutputDeviceMap().get(uuid);
         } else return findClosestOutputDevice(audioLocation, action.getAction());

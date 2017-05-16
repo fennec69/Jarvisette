@@ -28,7 +28,10 @@ public class Main {
         InjectionModule injectionModule = new InjectionModule();
         Injector injector = Guice.createInjector(injectionModule);
 
-        Server server = new Server(80);
+        String PORT = System.getenv("PORT");
+        System.out.println(PORT);
+        
+        Server server = new Server(Integer.parseInt(PORT));
 
         ServletContextHandler servletHandler = new ServletContextHandler();
         servletHandler.addEventListener(injector.getInstance((GuiceResteasyBootstrapServletContextListener.class)));

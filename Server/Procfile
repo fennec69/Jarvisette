@@ -1,1 +1,1 @@
-web: java -cp target/classes:target/dependency/* com.fhacktory.Main
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/jarvisette.jar

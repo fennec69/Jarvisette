@@ -1,5 +1,6 @@
-package com.fhacktory.processor;
+package com.fhacktory.processor.inputs;
 
+import com.fhacktory.processor.outputs.OutputActionProcessor;
 import com.fhacktory.utils.SignalUtils;
 
 import java.util.Map;

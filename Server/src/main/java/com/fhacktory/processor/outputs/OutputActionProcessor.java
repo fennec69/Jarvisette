@@ -1,4 +1,4 @@
-package com.fhacktory.processor;
+package com.fhacktory.processor.outputs;
 
 import com.fhacktory.action_detector.CommandAction;
 import com.fhacktory.action_detector.CommandActionDetector;
@@ -11,6 +11,7 @@ import com.fhacktory.data.conf.ConfigLoader;
 import com.fhacktory.data.entities.ActionType;
 import com.fhacktory.data.entities.AudioLocation;
 import com.fhacktory.data.entities.OutputDevice;
+import com.fhacktory.processor.inputs.AudioMessage;
 import com.fhacktory.speech_recognition.SpeechRecognizer;
 import com.fhacktory.speech_recognition.google_speech.GoogleSpeechRecognizer;
 import com.google.gson.Gson;

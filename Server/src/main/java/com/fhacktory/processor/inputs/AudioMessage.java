@@ -1,4 +1,4 @@
-package com.fhacktory.processor;
+package com.fhacktory.processor.inputs;
 
 /**
  * Created by farid on 14/05/2017.

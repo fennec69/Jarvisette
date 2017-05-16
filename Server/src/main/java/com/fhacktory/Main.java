@@ -28,7 +28,7 @@ public class Main {
         InjectionModule injectionModule = new InjectionModule();
         Injector injector = Guice.createInjector(injectionModule);
 
-        Server server = new Server(8080);
+        Server server = new Server(5000);
 
         ServletContextHandler servletHandler = new ServletContextHandler();
         servletHandler.addEventListener(injector.getInstance((GuiceResteasyBootstrapServletContextListener.class)));

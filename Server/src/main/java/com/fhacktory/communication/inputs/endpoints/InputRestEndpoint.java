@@ -20,4 +20,11 @@ public class InputRestEndpoint {
         return Response.ok().build();
     }
 
+    @GET
+    @Path("/")
+    @Produces("application/json")
+    public Response ping() {
+        return Response.ok().entity(new AudioSignalDto()).build();
+    }
+
 }

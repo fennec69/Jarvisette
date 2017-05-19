@@ -10,19 +10,19 @@ public class OutputDevice {
 
     private List<String> mCapabilities;
     private String mUUID;
-    private AudioLocation mAudioLocation;
+    private Location mLocation;
 
     public OutputDevice(String UUID) {
         mUUID = UUID;
         mCapabilities = new ArrayList<String>();
     }
 
-    public AudioLocation getAudioLocation() {
-        return mAudioLocation;
+    public Location getAudioLocation() {
+        return mLocation;
     }
 
-    public void setAudioLocation(AudioLocation audioLocation) {
-        mAudioLocation = audioLocation;
+    public void setAudioLocation(Location location) {
+        mLocation = location;
     }
 
     public void setCapabilities(List<String> capabilities) {

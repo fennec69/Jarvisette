@@ -1,7 +1,7 @@
-package com.fhacktory.communication.inputs.endpoints;
+package com.fhacktory.input.audio.com.endpoints;
 
-import com.fhacktory.communication.inputs.dtos.AudioSignalDto;
-import com.fhacktory.processor.inputs.AudioMessageProcessor;
+import com.fhacktory.input.audio.com.dtos.AudioSignalDto;
+import com.fhacktory.input.audio.AudioMessageProcessor;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;

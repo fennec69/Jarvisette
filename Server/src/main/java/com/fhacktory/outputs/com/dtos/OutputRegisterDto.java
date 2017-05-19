@@ -1,4 +1,4 @@
-package com.fhacktory.communication.outputs;
+package com.fhacktory.outputs.com.dtos;
 
 import java.util.List;
 

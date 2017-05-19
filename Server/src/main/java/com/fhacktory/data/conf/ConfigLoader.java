@@ -3,10 +3,9 @@ package com.fhacktory.data.conf;
 import com.fhacktory.data.conf.dtos.ConfFileDto;
 import com.fhacktory.data.conf.dtos.LocationDto;
 import com.fhacktory.data.conf.dtos.OutputDeviceDto;
-import com.fhacktory.data.entities.AudioLocation;
+import com.fhacktory.data.entities.Location;
 import com.fhacktory.data.entities.OutputDevice;
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 
 import java.io.*;
 import java.util.Map;
@@ -38,11 +37,11 @@ public class ConfigLoader {
         ConfFileDto confFileDto = gson.fromJson(reader, ConfFileDto.class);
         for(OutputDeviceDto outputDeviceDto : confFileDto.getOutputs()) {
             OutputDevice outputDevice = new OutputDevice(outputDeviceDto.getUuid());
-            AudioLocation audioLocation = new AudioLocation();
+            Location location = new Location();
             for(LocationDto locationDto : outputDeviceDto.getLocations()) {
-                audioLocation.addLocation(locationDto.getUuid(), locationDto.getIntensity());
+                location.addLocation(locationDto.getUuid(), locationDto.getIntensity());
             }
-            outputDevice.setAudioLocation(audioLocation);
+            outputDevice.setAudioLocation(location);
             mOutputDeviceMap.put(outputDevice.getUUID(), outputDevice);
         }
     }

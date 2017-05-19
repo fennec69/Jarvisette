@@ -1,4 +1,4 @@
-package com.fhacktory.processor.inputs;
+package com.fhacktory.input.audio;
 
 /**
  * Created by farid on 14/05/2017.

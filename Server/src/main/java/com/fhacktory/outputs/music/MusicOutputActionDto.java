@@ -1,6 +1,5 @@
-package com.fhacktory.communication.outputs.music;
+package com.fhacktory.outputs.music;
 
-import com.fhacktory.communication.outputs.OutputActionDto;
 import com.fhacktory.data.entities.ActionType;
 
 /**

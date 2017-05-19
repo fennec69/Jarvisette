@@ -1,8 +1,8 @@
-package com.fhacktory.communication.inputs.endpoints;
+package com.fhacktory.input.audio.com.endpoints;
 
-import com.fhacktory.communication.inputs.dtos.AudioSignalDto;
-import com.fhacktory.communication.outputs.endpoints.OutputSocketEndpoint;
-import com.fhacktory.processor.inputs.AudioMessageProcessor;
+import com.fhacktory.input.audio.com.dtos.AudioSignalDto;
+import com.fhacktory.outputs.com.endpoints.OutputSocketEndpoint;
+import com.fhacktory.input.audio.AudioMessageProcessor;
 import com.google.gson.Gson;
 
 import javax.websocket.OnClose;

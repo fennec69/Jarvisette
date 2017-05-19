@@ -1,6 +1,6 @@
-package com.fhacktory.communication.outputs.endpoints;
+package com.fhacktory.outputs.com.endpoints;
 
-import com.fhacktory.communication.outputs.OutputRegisterDto;
+import com.fhacktory.outputs.com.dtos.OutputRegisterDto;
 import com.fhacktory.data.conf.ConfigLoader;
 import com.google.gson.Gson;
 

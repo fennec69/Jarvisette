@@ -1,6 +1,5 @@
-package com.fhacktory.communication.outputs.tts;
+package com.fhacktory.outputs.tts;
 
-import com.fhacktory.communication.outputs.OutputActionDto;
 import com.fhacktory.data.entities.ActionType;
 
 /**

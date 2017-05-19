@@ -1,7 +1,7 @@
 package com.fhacktory;
 
-import com.fhacktory.communication.inputs.endpoints.InputSocketEndpoint;
-import com.fhacktory.communication.outputs.endpoints.OutputSocketEndpoint;
+import com.fhacktory.input.audio.com.endpoints.InputSocketEndpoint;
+import com.fhacktory.outputs.com.endpoints.OutputSocketEndpoint;
 import com.fhacktory.config.InjectionModule;
 import com.fhacktory.data.conf.ConfigLoader;
 import com.google.inject.Guice;

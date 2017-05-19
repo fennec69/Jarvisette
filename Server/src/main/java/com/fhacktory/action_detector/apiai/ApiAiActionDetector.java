@@ -1,6 +1,6 @@
 package com.fhacktory.action_detector.apiai;
 
-import com.fhacktory.action_detector.CommandAction;
+import com.fhacktory.data.entities.CommandAction;
 import com.fhacktory.action_detector.CommandActionDetector;
 import com.fhacktory.action_detector.apiai.dtos.ApiAiRequestDto;
 import com.fhacktory.action_detector.apiai.dtos.ApiAiResponseDto;

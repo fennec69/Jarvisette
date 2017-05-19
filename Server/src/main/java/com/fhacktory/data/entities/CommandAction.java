@@ -1,4 +1,4 @@
-package com.fhacktory.action_detector;
+package com.fhacktory.data.entities;
 
 import java.util.Map;
 
@@ -10,6 +10,7 @@ public class CommandAction {
     private String action;
     private Map<String, String> parameters;
     private String responseSpeech;
+    private String responseType;
 
     public  String getAction() {
         return action;
@@ -33,5 +34,13 @@ public class CommandAction {
 
     public void setResponseSpeech(String responseSpeech) {
         this.responseSpeech = responseSpeech;
+    }
+
+    public String getResponseType() {
+        return responseType;
+    }
+
+    public void setResponseType(String responseType) {
+        this.responseType = responseType;
     }
 }

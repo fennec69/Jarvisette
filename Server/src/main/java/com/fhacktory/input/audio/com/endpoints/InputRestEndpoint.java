@@ -2,6 +2,7 @@ package com.fhacktory.input.audio.com.endpoints;
 
 import com.fhacktory.input.audio.com.dtos.AudioSignalDto;
 import com.fhacktory.input.audio.AudioMessageProcessor;
+import com.google.inject.Inject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -12,11 +13,14 @@ import javax.ws.rs.core.Response;
 @Path("/input")
 public class InputRestEndpoint {
 
+    @Inject
+    private AudioMessageProcessor mAudioMessageProcessor;
+
     @POST
     @Path("/{uuid}")
     @Consumes("application/json")
     public Response postNewCommand(@PathParam("uuid") String uuid, AudioSignalDto audioSignalDto) {
-        AudioMessageProcessor.getInstance().onAudioMessageReceived(uuid, audioSignalDto.getSignal());
+        mAudioMessageProcessor.onAudioMessageReceived(uuid, audioSignalDto.getSignal());
         return Response.ok().build();
     }
 

@@ -1,4 +1,4 @@
-package com.fhacktory.outputs;
+package com.fhacktory.outputs.com;
 
 import com.fhacktory.data.entities.OutputDevice;
 import com.fhacktory.outputs.com.OutputComInterface;

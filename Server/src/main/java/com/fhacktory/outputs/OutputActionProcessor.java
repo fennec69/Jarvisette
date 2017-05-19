@@ -3,7 +3,7 @@ package com.fhacktory.outputs;
 import com.fhacktory.data.conf.ConfigLoader;
 import com.fhacktory.data.entities.Location;
 import com.fhacktory.data.entities.OutputDevice;
-import com.fhacktory.outputs.OutputMessageBuilderManager;
+import com.fhacktory.outputs.com.ComInterfaceManager;
 import com.fhacktory.outputs.com.OutputComInterface;
 import com.google.inject.Inject;
 
@@ -16,14 +16,14 @@ import java.util.TreeMap;
 public class OutputActionProcessor {
 
     @Inject
-    private OutputComInterface outputComInterface;
-
-    private Map<String, OutputMessageBuilder> messageBuilderMap;
+    private ComInterfaceManager mComInterfaceManager;
 
     public void processOutput(String action, Map<String, String> parameters, String response, String responseType, Location location) {
         OutputDevice closestDevice = findClosestOutputDevice(location, action);
         sendOutputResponse(location, response, responseType);
-        String message = OutputMessageBuilderManager.createAction(action, parameters);
+        OutputMessageBuilder actionMessageBuilder = OutputMessageBuilderFactory.getMessageBuilderForAction(action);
+        String message = actionMessageBuilder.buildMessage(parameters);
+        OutputComInterface outputComInterface = mComInterfaceManager.getOutputComInterface(closestDevice);
         outputComInterface.sendMessage(message, closestDevice);
     }
 
@@ -31,7 +31,9 @@ public class OutputActionProcessor {
         OutputDevice responseDevice = findClosestOutputDevice(location, responseType);
         Map<String, String> responseParameters = new TreeMap<>();
         responseParameters.put("response", response);
-        String responseMessage = OutputMessageBuilderManager.createAction(responseType, responseParameters);
+        OutputComInterface outputComInterface = mComInterfaceManager.getOutputComInterface(responseDevice);
+        OutputMessageBuilder responseMessageBuilder = OutputMessageBuilderFactory.getMessageBuilderForAction(responseType);
+        String responseMessage = responseMessageBuilder.buildMessage(responseParameters);
         outputComInterface.sendMessage(responseMessage, responseDevice);
     }
 

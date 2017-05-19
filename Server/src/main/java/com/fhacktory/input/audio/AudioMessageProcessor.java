@@ -22,12 +22,13 @@ public class AudioMessageProcessor {
     private CommandActionDetector mCommandActionDetector;
     @Inject
     private SpeechRecognizer mSpeechRecognizer;
+    @Inject
+    private OutputActionProcessor outputActionProcessor;
 
     private static final AudioMessageProcessor INSTANCE = new AudioMessageProcessor();
 
     private Map<String, AudioMessage> mSignalBuffer;
     private Timer mTimer;
-    private OutputActionProcessor outputActionProcessor;
 
     private AudioMessageProcessor() {
         mSignalBuffer = new TreeMap<>();

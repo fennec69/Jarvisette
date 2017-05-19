@@ -14,10 +14,10 @@ public class LightOutputMessageBuilder implements OutputMessageBuilder {
     public static final String POWER_PARAM = "power";
 
     @Override
-    public String buildMessage(Map<String, Object> parameters) {
+    public String buildMessage(Map<String, String> parameters) {
         Gson gson = new Gson();
         if(parameters.containsKey(POWER_PARAM)) {
-            LightMessageDto lightMessageDto = new LightMessageDto((Boolean) parameters.get(POWER_PARAM));
+            LightMessageDto lightMessageDto = new LightMessageDto(Boolean.valueOf(parameters.get(POWER_PARAM)));
             return gson.toJson(lightMessageDto);
         }
         return null;

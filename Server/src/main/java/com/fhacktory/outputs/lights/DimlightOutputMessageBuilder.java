@@ -13,10 +13,10 @@ public class DimlightOutputMessageBuilder implements OutputMessageBuilder {
     public static final String DIMLIGHT_PARAM = "dimlight";
 
     @Override
-    public String buildMessage(Map<String, Object> parameters) {
+    public String buildMessage(Map<String, String> parameters) {
         Gson gson = new Gson();
         if(parameters.containsKey(DIMLIGHT_PARAM)) {
-           DimlightMessageDto lightMessageDto = new DimlightMessageDto((Integer) parameters.get(DIMLIGHT_PARAM));
+           DimlightMessageDto lightMessageDto = new DimlightMessageDto(Integer.valueOf(parameters.get(DIMLIGHT_PARAM)));
             return gson.toJson(lightMessageDto);
         }
         return null;

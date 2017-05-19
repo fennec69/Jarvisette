@@ -1,19 +1,21 @@
 package com.fhacktory.input.audio;
 
 import com.fhacktory.data.entities.CommandAction;
-import com.fhacktory.action_detector.CommandActionDetector;
 import com.fhacktory.data.entities.ActionType;
 import com.fhacktory.data.entities.Location;
-import com.fhacktory.outputs.OutputActionProcessor;
-import com.fhacktory.speech_recognition.SpeechRecognizer;
+import com.fhacktory.input.action_detector.CommandActionDetector;
+import com.fhacktory.common.ActionProcessor;
+import com.fhacktory.input.audio.speech_recognition.SpeechRecognizer;
 import com.fhacktory.utils.SignalUtils;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.*;
 
 /**
  * Created by farid on 14/05/2017.
  */
+@Singleton
 public class AudioMessageProcessor {
 
     private static final int TIMER_DELAY_IN_MS = 500;
@@ -23,19 +25,13 @@ public class AudioMessageProcessor {
     @Inject
     private SpeechRecognizer mSpeechRecognizer;
     @Inject
-    private OutputActionProcessor outputActionProcessor;
-
-    private static final AudioMessageProcessor INSTANCE = new AudioMessageProcessor();
+    private ActionProcessor mActionProcessor;
 
     private Map<String, AudioMessage> mSignalBuffer;
     private Timer mTimer;
 
-    private AudioMessageProcessor() {
+    public AudioMessageProcessor() {
         mSignalBuffer = new TreeMap<>();
-    }
-
-    public static AudioMessageProcessor getInstance() {
-        return INSTANCE;
     }
 
     public synchronized void onAudioMessageReceived(String uuid, String signal) {
@@ -60,7 +56,7 @@ public class AudioMessageProcessor {
         String query = mSpeechRecognizer.speechToText(mostPowerfulMessage.getSignal());
         CommandAction commandAction = mCommandActionDetector.getAction(query);
         Location location = calculateAudioLocation(audioMessages);
-        outputActionProcessor.processOutput(commandAction.getAction(), commandAction.getParameters(), commandAction.getResponseSpeech(), ActionType.TTS, location);
+        mActionProcessor.processOutput(commandAction.getAction(), commandAction.getParameters(), commandAction.getResponseSpeech(), ActionType.TTS, location);
     }
 
     private Location calculateAudioLocation(Map<String, AudioMessage> audioMessages) {

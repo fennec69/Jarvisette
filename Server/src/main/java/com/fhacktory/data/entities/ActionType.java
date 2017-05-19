@@ -5,6 +5,7 @@ package com.fhacktory.data.entities;
  */
 public class ActionType {
     public static final String TTS = "tts";
+    public static final String TEXT = "text";
     public static final String LIGHT = "light";
     public static final String MUSIC = "music";
     public static final String DIMLIGHT = "dimlight";

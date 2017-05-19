@@ -1,9 +1,10 @@
 package com.fhacktory.input.audio.com.endpoints;
 
-import com.fhacktory.input.audio.com.dtos.AudioSignalDto;
-import com.fhacktory.outputs.com.endpoints.OutputSocketEndpoint;
+import com.fhacktory.common.WebsocketEndpoint;
 import com.fhacktory.input.audio.AudioMessageProcessor;
+import com.fhacktory.input.audio.com.dtos.AudioSignalDto;
 import com.google.gson.Gson;
+import com.google.inject.Inject;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -17,7 +18,10 @@ import java.util.TreeMap;
  * Created by farid on 13/05/2017.
  */
 @ServerEndpoint(value = "/input/{uuid}")
-public class InputSocketEndpoint {
+public class InputSocketEndpoint implements WebsocketEndpoint {
+
+    @Inject
+    private AudioMessageProcessor mAudioMessageProcessor;
 
     private static Map<String, Session> sessions = new TreeMap<String, Session>();
     private Gson mGson;
@@ -32,14 +36,9 @@ public class InputSocketEndpoint {
     public void onWebSocketText(Session session, String message) {
         System.out.println("Received TEXT message: " + message);
         String uuid = session.getPathParameters().get("uuid");
-        if(uuid.equals("TEST")) {
-            OutputSocketEndpoint.sendMessage(message, "R930");
-        }
-        else {
-            if (mGson == null) mGson = new Gson();
-            AudioSignalDto audioSignalDto = mGson.fromJson(message, AudioSignalDto.class);
-            AudioMessageProcessor.getInstance().onAudioMessageReceived(uuid, audioSignalDto.getSignal());
-        }
+        if (mGson == null) mGson = new Gson();
+        AudioSignalDto audioSignalDto = mGson.fromJson(message, AudioSignalDto.class);
+        mAudioMessageProcessor.onAudioMessageReceived(uuid, audioSignalDto.getSignal());
     }
 
     @OnClose

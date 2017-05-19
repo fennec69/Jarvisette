@@ -14,7 +14,7 @@ public class OutputDevice {
 
     public OutputDevice(String UUID) {
         mUUID = UUID;
-        mCapabilities = new ArrayList<String>();
+        mCapabilities = new ArrayList<>();
     }
 
     public Location getAudioLocation() {

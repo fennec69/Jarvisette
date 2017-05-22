@@ -1,7 +1,7 @@
 package com.fhacktory.outputs.plugins.lights;
 
 import com.fhacktory.data.entities.ActionType;
-import com.fhacktory.outputs.common.MessageBuilder;
+import com.fhacktory.common.MessageBuilder;
 import com.google.gson.Gson;
 
 import java.util.Map;

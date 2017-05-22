@@ -2,6 +2,7 @@ package com.fhacktory.outputs.com.socket.endpoints;
 
 import com.fhacktory.common.ComInterface;
 import com.fhacktory.common.ComInterfaceManager;
+import com.fhacktory.common.WebsocketConfigurator;
 import com.fhacktory.outputs.common.OutputDeviceManager;
 import com.fhacktory.common.WebsocketEndpoint;
 import com.fhacktory.data.entities.OutputDevice;
@@ -20,7 +21,7 @@ import java.util.TreeMap;
 /**
  * Created by farid on 13/05/2017.
  */
-@ServerEndpoint(value = "/output/{uuid}")
+@ServerEndpoint(value = "/output/{uuid}", configurator = WebsocketConfigurator.class)
 public class OutputSocketEndpoint implements ComInterface, WebsocketEndpoint {
 
     @Inject

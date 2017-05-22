@@ -1,6 +1,6 @@
 package com.fhacktory.outputs.plugins.tts;
 
-import com.fhacktory.outputs.common.MessageBuilder;
+import com.fhacktory.common.MessageBuilder;
 import com.fhacktory.data.entities.ActionType;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.MapBinder;

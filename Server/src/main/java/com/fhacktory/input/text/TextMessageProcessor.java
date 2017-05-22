@@ -1,6 +1,7 @@
 package com.fhacktory.input.text;
 
 import com.fhacktory.common.ActionProcessor;
+import com.fhacktory.data.entities.ActionType;
 import com.fhacktory.data.entities.CommandAction;
 import com.fhacktory.data.entities.Location;
 import com.fhacktory.input.action_detector.CommandActionDetector;
@@ -20,9 +21,7 @@ public class TextMessageProcessor {
     private ActionProcessor mActionProcessor;
 
     public void processMessage(TextCommandDto textCommandDto, String senderUuid) {
-        Location location = new Location();
-        location.addLocation(senderUuid, 100f);
         CommandAction commandAction = mCommandActionDetector.getAction(textCommandDto.getText());
-        mActionProcessor.processOutput(commandAction, commandAction.getResponseSpeech(), senderUuid, location);
+        mActionProcessor.processOutput(commandAction, ActionType.TEXT, senderUuid, null);
     }
 }

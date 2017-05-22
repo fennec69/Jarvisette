@@ -1,6 +1,7 @@
 package com.fhacktory;
 
-import com.fhacktory.com.WebsocketConfigurator;
+import com.fhacktory.config.GuiceManager;
+import com.fhacktory.common.WebsocketConfigurator;
 import com.fhacktory.config.InjectionModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -22,6 +23,7 @@ public class Main {
 
         InjectionModule injectionModule = new InjectionModule();
         Injector injector = Guice.createInjector(injectionModule);
+        GuiceManager.injector = injector;
 
         String PORT = System.getenv("PORT");
         System.out.println(PORT);

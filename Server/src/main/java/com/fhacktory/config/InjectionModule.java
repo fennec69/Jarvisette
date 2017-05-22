@@ -1,7 +1,7 @@
 package com.fhacktory.config;
 
 import com.fhacktory.com.ComInterfaceManagerImpl;
-import com.fhacktory.com.WebsocketConfigurator;
+import com.fhacktory.common.WebsocketConfigurator;
 import com.fhacktory.common.ActionProcessor;
 import com.fhacktory.common.ComInterfaceManager;
 import com.fhacktory.input.text.TextInputModule;

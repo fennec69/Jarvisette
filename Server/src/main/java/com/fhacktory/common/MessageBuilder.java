@@ -1,4 +1,4 @@
-package com.fhacktory.outputs.common;
+package com.fhacktory.common;
 
 import java.util.Map;
 

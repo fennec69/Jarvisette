@@ -5,7 +5,7 @@ import com.fhacktory.common.ComInterfaceManager;
 import com.fhacktory.data.entities.CommandAction;
 import com.fhacktory.data.entities.Location;
 import com.fhacktory.data.entities.OutputDevice;
-import com.fhacktory.outputs.common.MessageBuilder;
+import com.fhacktory.common.MessageBuilder;
 import com.fhacktory.outputs.common.OutputDeviceManager;
 import com.google.inject.Inject;
 
@@ -53,7 +53,7 @@ public class OutputActionProcessor implements ActionProcessor {
 
     private void sendOutputResponse(String response, String responseUUID, String responseType) {
         Map<String, String> responseParameters = new TreeMap<>();
-        responseParameters.put("response", response);
+        responseParameters.put("message", response);
         MessageBuilder responseMessageBuilder = getMessageBuilderForAction(responseType);
         String responseMessage = responseMessageBuilder.buildMessage(responseParameters);
         mComInterfaceManager.sendMessage(responseMessage, responseUUID);

@@ -1,9 +1,9 @@
 package com.fhacktory.input.text.com.endpoints;
 
+import com.fhacktory.common.WebsocketConfigurator;
 import com.fhacktory.common.ComInterface;
 import com.fhacktory.common.ComInterfaceManager;
 import com.fhacktory.common.WebsocketEndpoint;
-import com.fhacktory.input.audio.AudioMessageProcessor;
 import com.fhacktory.input.text.TextMessageProcessor;
 import com.fhacktory.input.text.com.dtos.TextCommandDto;
 import com.google.gson.Gson;
@@ -20,7 +20,7 @@ import java.util.TreeMap;
 /**
  * Created by farid on 13/05/2017.
  */
-@ServerEndpoint(value = "/input/command/{uuid}")
+@ServerEndpoint(value = "/input/command/{uuid}", configurator = WebsocketConfigurator.class)
 public class TextInputSocketEndpoint implements WebsocketEndpoint, ComInterface {
 
     @Inject

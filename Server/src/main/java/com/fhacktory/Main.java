@@ -1,16 +1,13 @@
 package com.fhacktory;
 
-import com.fhacktory.core.config.GuiceManager;
-import com.fhacktory.common.WebsocketConfigurator;
-import com.fhacktory.core.config.InjectionModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.websocket.jsr356.server.ServerContainer;
-import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
-import org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener;
-import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
+import com.fhacktory.plugins.outputs.tts.google_translate.GoogleTTS;
+import com.fhacktory.plugins.outputs.tts.google_translate.endpoints.GoogleTranslateEndpoint;
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * Created by farid on 13/05/2017.
@@ -21,7 +18,14 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        InjectionModule injectionModule = new InjectionModule();
+        GoogleTTS googleTTS = new GoogleTTS();
+        byte[] data = googleTTS.getTTS("Salut salle con", "fr");
+
+        File targetFile = new File("test.mp3");
+        FileOutputStream fileOutputStream = new FileOutputStream(targetFile);
+        fileOutputStream.write(data);
+
+        /*InjectionModule injectionModule = new InjectionModule();
         Injector injector = Guice.createInjector(injectionModule);
         GuiceManager.injector = injector;
 
@@ -41,7 +45,7 @@ public class Main {
         websocketConfigurator.addEnpoints(wscontainer);
 
         server.start();
-        server.join();
+        server.join();*/
     }
 
 }

@@ -2,8 +2,13 @@ package com.fhacktory.plugins.outputs.tts;
 
 import com.fhacktory.data.ActionType;
 import com.fhacktory.common.MessageBuilder;
+import com.fhacktory.plugins.outputs.tts.google_translate.GoogleTTS;
+import com.fhacktory.plugins.outputs.tts.google_translate.endpoints.GoogleTranslateEndpoint;
 import com.google.gson.Gson;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
+import javax.inject.Inject;
 import java.util.Map;
 
 /**
@@ -12,6 +17,9 @@ import java.util.Map;
 public class TtsMessageBuilder implements MessageBuilder {
 
     public static final String MESSAGE_PARAM = "message";
+
+    @Inject
+    private GoogleTTS mGoogleTTS;
 
     @Override
     public String buildMessage(Map<String, String> parameters) {

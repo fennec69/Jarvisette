@@ -2,6 +2,7 @@ package com.fhacktory.plugins.outputs.tts;
 
 import com.fhacktory.common.MessageBuilder;
 import com.fhacktory.data.ActionType;
+import com.fhacktory.plugins.outputs.tts.google_translate.GoogleTTS;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.MapBinder;
 
@@ -11,6 +12,7 @@ import com.google.inject.multibindings.MapBinder;
 public class TtsOutputModule extends AbstractModule {
     @Override
     protected void configure() {
+        bind(GoogleTTS.class);
         MapBinder<String, MessageBuilder> messageBuilderBinder = MapBinder.newMapBinder(binder(), String.class, MessageBuilder.class);
         messageBuilderBinder.addBinding(ActionType.TTS).to(TtsMessageBuilder.class);
     }

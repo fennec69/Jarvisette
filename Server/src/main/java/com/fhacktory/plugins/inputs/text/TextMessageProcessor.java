@@ -21,6 +21,7 @@ public class TextMessageProcessor {
 
     public void processMessage(TextCommandDto textCommandDto, String senderUuid) {
         CommandAction commandAction = mCommandActionDetector.getAction(textCommandDto.getText());
-        mActionProcessor.processOutput(commandAction, ActionType.TEXT, senderUuid, null);
+        commandAction.setResponseType(ActionType.TEXT);
+        mActionProcessor.processOutput(commandAction, senderUuid, null);
     }
 }

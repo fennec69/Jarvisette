@@ -25,7 +25,7 @@ public class ComInterfaceManagerImpl implements ComInterfaceManager {
 
     @Override
     public void sendMessage(String message, String uuid) {
-        getComInterface(uuid).sendMessage(message, uuid);
+        if(mComInterfaceMap.containsKey(uuid)) getComInterface(uuid).sendMessage(message, uuid);
     }
 
     @Override

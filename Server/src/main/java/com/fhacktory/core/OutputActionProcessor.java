@@ -26,29 +26,18 @@ public class OutputActionProcessor implements ActionProcessor {
     @Inject
     private DeviceManager mDeviceManager;
 
-    @Override
-    public void processOutput(CommandAction commandAction, String responseType, Location location) {
-        OutputDevice closestDevice = findClosestOutputDevice(location, commandAction.getAction());
-        sendOutputResponse(location, commandAction.getResponseSpeech(), responseType);
-        sendOutputMessage(commandAction, closestDevice.getUUID());
-    }
 
     @Override
-    public void processOutput(CommandAction commandAction, String responseType, String responseUUID, Location location) {
+    public void processOutput(CommandAction commandAction, String responseUUID, Location location) {
         OutputDevice closestDevice = findClosestOutputDevice(location, commandAction.getAction());
-        sendOutputResponse(commandAction.getResponseSpeech(), responseUUID, responseType);
-        sendOutputMessage(commandAction, closestDevice.getUUID());
+        sendOutputResponse(commandAction.getResponseSpeech(), responseUUID, commandAction.getResponseType());
+        if(closestDevice != null) sendOutputMessage(commandAction, closestDevice.getUUID());
     }
 
     private void sendOutputMessage(CommandAction commandAction, String uuid) {
         MessageBuilder actionMessageBuilder = getMessageBuilderForAction(commandAction.getAction());
         String message = actionMessageBuilder.buildMessage(commandAction.getParameters());
         mComInterfaceManager.sendMessage(message, uuid);
-    }
-
-    private void sendOutputResponse(Location location, String response, String responseType) {
-        OutputDevice responseDevice = findClosestOutputDevice(location, responseType);
-        sendOutputResponse(response, responseDevice.getUUID(), responseType);
     }
 
     private void sendOutputResponse(String response, String responseUUID, String responseType) {

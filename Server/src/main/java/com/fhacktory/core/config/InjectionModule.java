@@ -29,8 +29,8 @@ public class InjectionModule extends AbstractModule {
 
     private void init() {
         //Input plugins
-        install(new AudioInputModule());
-        install(new TextInputModule());
+        install(new AudioInputModule(true, true));
+        install(new TextInputModule(true, true));
 
         //Output plugins
         install(new OutputSocketModule());

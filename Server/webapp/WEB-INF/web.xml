@@ -5,7 +5,7 @@
     <display-name>Jarvisette</display-name>
     <context-param>
         <param-name>resteasy.guice.modules</param-name>
-        <param-value>com.fhacktory.config.InjectionModule</param-value>
+        <param-value>com.fhacktory.core.config.InjectionModule</param-value>
     </context-param>
     <context-param>
         <param-name>resteasy.servlet.mapping.prefix</param-name>

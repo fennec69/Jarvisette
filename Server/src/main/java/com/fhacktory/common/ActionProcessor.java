@@ -1,7 +1,7 @@
 package com.fhacktory.common;
 
-import com.fhacktory.data.entities.CommandAction;
-import com.fhacktory.data.entities.Location;
+import com.fhacktory.data.CommandAction;
+import com.fhacktory.data.Location;
 
 /**
  * Created by farid on 19/05/2017.

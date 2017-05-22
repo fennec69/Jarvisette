@@ -1,8 +1,8 @@
 package com.fhacktory;
 
-import com.fhacktory.config.GuiceManager;
+import com.fhacktory.core.config.GuiceManager;
 import com.fhacktory.common.WebsocketConfigurator;
-import com.fhacktory.config.InjectionModule;
+import com.fhacktory.core.config.InjectionModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.eclipse.jetty.server.Server;

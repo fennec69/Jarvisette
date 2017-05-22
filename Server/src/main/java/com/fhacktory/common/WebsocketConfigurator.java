@@ -1,7 +1,6 @@
 package com.fhacktory.common;
 
-import com.fhacktory.common.WebsocketEndpoint;
-import com.fhacktory.config.GuiceManager;
+import com.fhacktory.core.config.GuiceManager;
 import com.google.inject.Inject;
 import org.eclipse.jetty.websocket.jsr356.server.ServerContainer;
 
@@ -12,7 +11,7 @@ import java.util.Set;
 /**
  * Created by farid on 19/05/2017.
  */
-public class WebsocketConfigurator extends ServerEndpointConfig.Configurator{
+public class WebsocketConfigurator extends ServerEndpointConfig.Configurator {
 
     @Inject
     private Set<WebsocketEndpoint> mWebsocketEndpoints;

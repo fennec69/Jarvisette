@@ -1,8 +1,11 @@
-package com.fhacktory.input.audio.com.endpoints;
+package com.fhacktory.input.text.com.endpoints;
 
+import com.fhacktory.common.ComInterface;
+import com.fhacktory.common.ComInterfaceManager;
 import com.fhacktory.common.WebsocketEndpoint;
 import com.fhacktory.input.audio.AudioMessageProcessor;
-import com.fhacktory.input.audio.com.dtos.AudioSignalDto;
+import com.fhacktory.input.text.TextMessageProcessor;
+import com.fhacktory.input.text.com.dtos.TextCommandDto;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
@@ -17,11 +20,14 @@ import java.util.TreeMap;
 /**
  * Created by farid on 13/05/2017.
  */
-@ServerEndpoint(value = "/input/{uuid}")
-public class InputSocketEndpoint implements WebsocketEndpoint {
+@ServerEndpoint(value = "/input/command/{uuid}")
+public class TextInputSocketEndpoint implements WebsocketEndpoint, ComInterface {
 
     @Inject
-    private AudioMessageProcessor mAudioMessageProcessor;
+    private ComInterfaceManager mComInterfaceManager;
+
+    @Inject
+    private TextMessageProcessor mTextMessageProcessor;
 
     private static Map<String, Session> sessions = new TreeMap<String, Session>();
     private Gson mGson;
@@ -30,6 +36,7 @@ public class InputSocketEndpoint implements WebsocketEndpoint {
     public void onWebSocketConnect(Session sess) {
         System.out.println("Input module connected " + sess.getPathParameters().get("uuid"));
         sessions.put(sess.getPathParameters().get("uuid"), sess);
+        mComInterfaceManager.register(sess.getPathParameters().get("uuid"), this);
     }
 
     @OnMessage
@@ -37,8 +44,8 @@ public class InputSocketEndpoint implements WebsocketEndpoint {
         System.out.println("Received TEXT message: " + message);
         String uuid = session.getPathParameters().get("uuid");
         if (mGson == null) mGson = new Gson();
-        AudioSignalDto audioSignalDto = mGson.fromJson(message, AudioSignalDto.class);
-        mAudioMessageProcessor.onAudioMessageReceived(uuid, audioSignalDto.getSignal());
+        TextCommandDto textCommandDto = mGson.fromJson(message, TextCommandDto.class);
+        mTextMessageProcessor.processMessage(textCommandDto, uuid);
     }
 
     @OnClose
@@ -46,5 +53,14 @@ public class InputSocketEndpoint implements WebsocketEndpoint {
         String uuid = session.getPathParameters().get("uuid");
         System.out.println("Input module disconnected " + uuid);
         sessions.remove(uuid);
+        mComInterfaceManager.unregister(uuid);
+    }
+
+    @Override
+    public void sendMessage(String message, String uuid) {
+        if(sessions.containsKey(uuid)) {
+            Session session = sessions.get(uuid);
+            session.getAsyncRemote().sendText(message);
+        }
     }
 }

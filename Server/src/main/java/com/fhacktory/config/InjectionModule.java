@@ -1,9 +1,10 @@
 package com.fhacktory.config;
 
-import com.fhacktory.com.ComInterfaceManager;
+import com.fhacktory.com.ComInterfaceManagerImpl;
 import com.fhacktory.com.WebsocketConfigurator;
 import com.fhacktory.common.ActionProcessor;
-import com.fhacktory.common.ComInterfaceProcessor;
+import com.fhacktory.common.ComInterfaceManager;
+import com.fhacktory.input.text.TextInputModule;
 import com.fhacktory.outputs.common.OutputDeviceManager;
 import com.fhacktory.input.audio.AudioInputModule;
 import com.fhacktory.outputs.OutputActionProcessor;
@@ -28,13 +29,15 @@ public class InjectionModule extends AbstractModule {
 
     private void init() {
         install(new AudioInputModule());
+        install(new TextInputModule());
 
         install(new LightModule());
         install(new TextModule());
         install(new TtsModule());
+
         install(new OutputSocketModule());
         bind(OutputActionProcessor.class);
-        bind(ComInterfaceProcessor.class).to(ComInterfaceManager.class);
+        bind(ComInterfaceManager.class).to(ComInterfaceManagerImpl.class);
         bind(ActionProcessor.class).to(OutputActionProcessor.class);
         bind(OutputDeviceManager.class).to(ConfigLoader.class);
 

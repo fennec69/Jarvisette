@@ -1,7 +1,7 @@
 package com.fhacktory.outputs.com.socket.endpoints;
 
 import com.fhacktory.common.ComInterface;
-import com.fhacktory.common.ComInterfaceProcessor;
+import com.fhacktory.common.ComInterfaceManager;
 import com.fhacktory.outputs.common.OutputDeviceManager;
 import com.fhacktory.common.WebsocketEndpoint;
 import com.fhacktory.data.entities.OutputDevice;
@@ -24,7 +24,7 @@ import java.util.TreeMap;
 public class OutputSocketEndpoint implements ComInterface, WebsocketEndpoint {
 
     @Inject
-    private ComInterfaceProcessor mComInterfaceProcessor;
+    private ComInterfaceManager mComInterfaceManager;
 
     @Inject
     private OutputDeviceManager mOutputDeviceManager;
@@ -35,7 +35,7 @@ public class OutputSocketEndpoint implements ComInterface, WebsocketEndpoint {
     public void onWebSocketConnect(Session sess) {
         System.out.println("Output module connected " + sess.getPathParameters().get("uuid"));
         sessions.put(sess.getPathParameters().get("uuid"), sess);
-        mComInterfaceProcessor.register(sess.getPathParameters().get("uuid"), this);
+        mComInterfaceManager.register(sess.getPathParameters().get("uuid"), this);
     }
 
     @OnMessage
@@ -54,13 +54,13 @@ public class OutputSocketEndpoint implements ComInterface, WebsocketEndpoint {
         String uuid = session.getPathParameters().get("uuid");
         System.out.println("Output module disconnected " + uuid);
         sessions.remove(uuid);
-        mComInterfaceProcessor.unregister(uuid);
+        mComInterfaceManager.unregister(uuid);
     }
 
     @Override
-    public void sendMessage(String message, OutputDevice outputDevice) {
-        if(sessions.containsKey(outputDevice.getUUID())) {
-            Session session = sessions.get(outputDevice.getUUID());
+    public void sendMessage(String message, String uuid) {
+        if(sessions.containsKey(uuid)) {
+            Session session = sessions.get(uuid);
             session.getAsyncRemote().sendText(message);
         }
     }

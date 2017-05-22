@@ -56,7 +56,7 @@ public class AudioMessageProcessor {
         String query = mSpeechRecognizer.speechToText(mostPowerfulMessage.getSignal());
         CommandAction commandAction = mCommandActionDetector.getAction(query);
         Location location = calculateAudioLocation(audioMessages);
-        mActionProcessor.processOutput(commandAction.getAction(), commandAction.getParameters(), commandAction.getResponseSpeech(), ActionType.TTS, location);
+        mActionProcessor.processOutput(commandAction, commandAction.getResponseSpeech(), ActionType.TTS, location);
     }
 
     private Location calculateAudioLocation(Map<String, AudioMessage> audioMessages) {

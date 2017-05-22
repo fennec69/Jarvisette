@@ -10,8 +10,8 @@ import javax.ws.rs.core.Response;
 /**
  * Created by farid on 14/05/2017.
  */
-@Path("/input")
-public class InputRestEndpoint {
+@Path("/input/audio")
+public class AudioInputRestEndpoint {
 
     @Inject
     private AudioMessageProcessor mAudioMessageProcessor;

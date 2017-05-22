@@ -1,8 +1,7 @@
 package com.fhacktory.com;
 
-import com.fhacktory.data.entities.OutputDevice;
-import com.fhacktory.common.ComInterfaceProcessor;
 import com.fhacktory.common.ComInterface;
+import com.fhacktory.common.ComInterfaceManager;
 import com.google.inject.Singleton;
 
 import java.util.Map;
@@ -12,21 +11,21 @@ import java.util.TreeMap;
  * Created by fkilani on 18/05/2017.
  */
 @Singleton
-public class ComInterfaceManager implements ComInterfaceProcessor {
+public class ComInterfaceManagerImpl implements ComInterfaceManager {
 
     private volatile Map<String, ComInterface> mComInterfaceMap;
 
-    public ComInterfaceManager() {
+    public ComInterfaceManagerImpl() {
         mComInterfaceMap = new TreeMap<>();
     }
 
-    public ComInterface getOutputComInterface(OutputDevice outputDevice) {
-        return mComInterfaceMap.get(outputDevice.getUUID());
+    public ComInterface getComInterface(String uuid) {
+        return mComInterfaceMap.get(uuid);
     }
 
     @Override
-    public ComInterface getComInterface(String uuid) {
-        return mComInterfaceMap.get(uuid);
+    public void sendMessage(String message, String uuid) {
+        getComInterface(uuid).sendMessage(message, uuid);
     }
 
     @Override

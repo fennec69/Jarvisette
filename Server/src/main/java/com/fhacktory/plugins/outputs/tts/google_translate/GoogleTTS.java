@@ -4,7 +4,11 @@ import com.fhacktory.plugins.outputs.tts.google_translate.endpoints.GoogleTransl
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.io.IOException;
+import javax.sound.sampled.*;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Created by fkilani on 22/05/2017.
@@ -25,10 +29,27 @@ public class GoogleTTS {
 
     public byte[] getTTS(String text, String lang) {
         try {
-            return mGoogleTranslateEndpoint.getSpeech(text, lang).execute().body().bytes();
-        } catch (IOException e) {
+            return mp3ToWav(mGoogleTranslateEndpoint.getSpeech(text, lang).execute().body().byteStream());
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
+    private byte[] mp3ToWav(InputStream mp3Data) throws Exception {
+        AudioInputStream mp3Stream = AudioSystem.getAudioInputStream(mp3Data);
+        AudioFormat sourceFormat = mp3Stream.getFormat();
+        AudioFormat convertFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+                sourceFormat.getSampleRate(), 16,
+                sourceFormat.getChannels(),
+                sourceFormat.getChannels() * 2,
+                sourceFormat.getSampleRate(),
+                false);
+        AudioInputStream converted = AudioSystem.getAudioInputStream(convertFormat, mp3Stream);
+        File file  = new File("tmp.wav");
+        AudioSystem.write(converted, AudioFileFormat.Type.WAVE, file);
+        Path path = Paths.get("tmp.wav");
+        return Files.readAllBytes(path);
+    }
+
 }

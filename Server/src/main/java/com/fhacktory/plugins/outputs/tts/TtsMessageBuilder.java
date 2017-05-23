@@ -5,8 +5,10 @@ import com.fhacktory.common.MessageBuilder;
 import com.fhacktory.plugins.outputs.tts.google_translate.GoogleTTS;
 import com.fhacktory.plugins.outputs.tts.google_translate.endpoints.GoogleTranslateEndpoint;
 import com.google.gson.Gson;
+import org.apache.commons.codec.binary.Base64;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import sun.misc.BASE64Encoder;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -23,10 +25,11 @@ public class TtsMessageBuilder implements MessageBuilder {
 
     @Override
     public String buildMessage(Map<String, String> parameters) {
-        //TODO: transform text message to speech
         Gson gson = new Gson();
         if(parameters.containsKey(MESSAGE_PARAM)) {
-            TtsOutputActionDto messageDto = new TtsOutputActionDto(parameters.get(MESSAGE_PARAM));
+            String base64TTS = Base64.encodeBase64String(mGoogleTTS.getTTS(parameters.get(MESSAGE_PARAM), "fr"));
+            TtsOutputActionDto messageDto = new TtsOutputActionDto(base64TTS);
+
             return gson.toJson(messageDto);
         }
         return null;

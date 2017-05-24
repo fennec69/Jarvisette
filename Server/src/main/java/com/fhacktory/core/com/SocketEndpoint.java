@@ -1,8 +1,9 @@
-package com.fhacktory.plugins.inputs.audio.com.endpoints;
+package com.fhacktory.core.com;
 
+import com.fhacktory.common.ComInterface;
+import com.fhacktory.common.InputMessageProcessor;
 import com.fhacktory.common.WebsocketEndpoint;
-import com.fhacktory.plugins.inputs.audio.AudioMessageProcessor;
-import com.fhacktory.plugins.inputs.audio.com.dtos.AudioSignalDto;
+import com.fhacktory.data.MessageType;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
@@ -17,11 +18,11 @@ import java.util.TreeMap;
 /**
  * Created by farid on 13/05/2017.
  */
-@ServerEndpoint(value = "/input/audio/{uuid}")
-public class AudioInputSocketEndpoint implements WebsocketEndpoint {
+@ServerEndpoint(value = "/{uuid}")
+public class SocketEndpoint implements WebsocketEndpoint, ComInterface {
 
     @Inject
-    private AudioMessageProcessor mAudioMessageProcessor;
+    private Map<MessageType, InputMessageProcessor> mInputMessageProcessorMap;
 
     private static Map<String, Session> sessions = new TreeMap<String, Session>();
     private Gson mGson;
@@ -37,8 +38,11 @@ public class AudioInputSocketEndpoint implements WebsocketEndpoint {
         System.out.println("Received TEXT message: " + message);
         String uuid = session.getPathParameters().get("uuid");
         if (mGson == null) mGson = new Gson();
-        AudioSignalDto audioSignalDto = mGson.fromJson(message, AudioSignalDto.class);
-        mAudioMessageProcessor.onAudioMessageReceived(uuid, audioSignalDto.getSignal());
+        InputMessageDto inputMessageDto = mGson.fromJson(message, InputMessageDto.class);
+        if(inputMessageDto != null && inputMessageDto.getType() != null) {
+            InputMessageProcessor inputMessageProcessor = mInputMessageProcessorMap.get(inputMessageDto.getType());
+            inputMessageProcessor.process(message, uuid);
+        }
     }
 
     @OnClose
@@ -46,5 +50,13 @@ public class AudioInputSocketEndpoint implements WebsocketEndpoint {
         String uuid = session.getPathParameters().get("uuid");
         System.out.println("Input module disconnected " + uuid);
         sessions.remove(uuid);
+    }
+
+    @Override
+    public void sendMessage(String message, String uuid) {
+        if(sessions.containsKey(uuid)) {
+            Session session = sessions.get(uuid);
+            session.getAsyncRemote().sendText(message);
+        }
     }
 }

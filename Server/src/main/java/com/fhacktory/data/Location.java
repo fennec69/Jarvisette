@@ -23,6 +23,7 @@ public class Location {
     }
 
     public double matching(Location location) {
+        if(location == null) return 0;
         Map<String, Float> tmpMap = new TreeMap<String, Float>(location.getLocations());
         int sum = 0;
         for(String uuid : mLocations.keySet()) {

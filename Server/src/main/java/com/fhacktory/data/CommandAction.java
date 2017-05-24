@@ -11,6 +11,7 @@ public class CommandAction {
     private Map<String, String> parameters;
     private String responseSpeech;
     private String responseType;
+    private String responseUuid;
 
     public  String getAction() {
         return action;
@@ -42,5 +43,13 @@ public class CommandAction {
 
     public void setResponseType(String responseType) {
         this.responseType = responseType;
+    }
+
+    public String getResponseUuid() {
+        return responseUuid;
+    }
+
+    public void setResponseUuid(String responseUuid) {
+        this.responseUuid = responseUuid;
     }
 }

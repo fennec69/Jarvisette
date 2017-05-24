@@ -35,7 +35,6 @@ public class OutputSocketEndpoint implements ComInterface, WebsocketEndpoint {
     public void onWebSocketConnect(Session sess) {
         System.out.println("Output module connected " + sess.getPathParameters().get("uuid"));
         sessions.put(sess.getPathParameters().get("uuid"), sess);
-        mComInterfaceManager.register(sess.getPathParameters().get("uuid"), this);
     }
 
     @OnMessage
@@ -44,7 +43,10 @@ public class OutputSocketEndpoint implements ComInterface, WebsocketEndpoint {
         Gson gson = new Gson();
         String uuid = session.getPathParameters().get("uuid");
         OutputRegisterDto outputRegisterDto = gson.fromJson(message, OutputRegisterDto.class);
-        if(outputRegisterDto.getServices() != null) {
+        if(outputRegisterDto != null && outputRegisterDto.getServices() != null) {
+            for(String service : outputRegisterDto.getServices()) {
+                mComInterfaceManager.register(uuid, service, this);
+            }
             mDeviceManager.setCapabilities(uuid, outputRegisterDto.getServices());
         }
     }

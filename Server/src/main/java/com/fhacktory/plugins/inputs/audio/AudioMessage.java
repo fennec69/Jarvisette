@@ -7,6 +7,8 @@ public class AudioMessage {
 
     private String mSignal;
     private String mUuid;
+    private String mResponseUuid;
+    private String mResponseType;
     private int mRmsLevel;
 
     public AudioMessage(String uuid, String signal, int rmsLevel) {
@@ -25,5 +27,25 @@ public class AudioMessage {
 
     public int getRmsLevel() {
         return mRmsLevel;
+    }
+
+    public String getResponseUuid() {
+        return mResponseUuid;
+    }
+
+    public String getResponseType() {
+        return mResponseType;
+    }
+
+    public void setUuid(String uuid) {
+        mUuid = uuid;
+    }
+
+    public void setResponseUuid(String responseUuid) {
+        mResponseUuid = responseUuid;
+    }
+
+    public void setResponseType(String responseType) {
+        mResponseType = responseType;
     }
 }

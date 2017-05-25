@@ -1,6 +1,6 @@
 package com.fhacktory;
 
-import com.fhacktory.common.WebsocketConfigurator;
+import com.fhacktory.core.com.WebsocketConfigurator;
 import com.fhacktory.core.config.GuiceManager;
 import com.fhacktory.core.config.InjectionModule;
 import com.google.inject.Guice;

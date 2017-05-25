@@ -1,5 +1,6 @@
-package com.fhacktory.common;
+package com.fhacktory.core.com;
 
+import com.fhacktory.common.WebsocketEndpoint;
 import com.fhacktory.core.config.GuiceManager;
 import com.google.inject.Inject;
 import org.eclipse.jetty.websocket.jsr356.server.ServerContainer;

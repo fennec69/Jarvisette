@@ -6,5 +6,5 @@ package com.fhacktory.data;
 public enum MessageType {
     AUDIO_COMMAND,
     TEXT_COMMAND,
-    OUTPUT_REGISTERING
+    REGISTERING
 }

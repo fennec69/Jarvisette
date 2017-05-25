@@ -1,4 +1,4 @@
-package com.fhacktory.common;
+package com.fhacktory.core;
 
 import com.fhacktory.data.OutputDevice;
 

@@ -1,6 +1,6 @@
 package com.fhacktory.core.data.conf_file;
 
-import com.fhacktory.common.DeviceManager;
+import com.fhacktory.core.DeviceManager;
 import com.fhacktory.core.data.conf_file.dtos.ConfFileDto;
 import com.fhacktory.core.data.conf_file.dtos.LocationDto;
 import com.fhacktory.core.data.conf_file.dtos.OutputDeviceDto;

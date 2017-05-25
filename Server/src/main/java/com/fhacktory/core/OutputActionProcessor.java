@@ -1,8 +1,6 @@
 package com.fhacktory.core;
 
 import com.fhacktory.common.ActionProcessor;
-import com.fhacktory.common.ComInterfaceManager;
-import com.fhacktory.common.DeviceManager;
 import com.fhacktory.data.CommandAction;
 import com.fhacktory.data.Location;
 import com.fhacktory.data.OutputDevice;
@@ -42,7 +40,7 @@ public class OutputActionProcessor implements ActionProcessor {
     private void sendOutputMessage(CommandAction commandAction, String uuid) {
         MessageBuilder actionMessageBuilder = getMessageBuilderForAction(commandAction.getAction());
         String message = actionMessageBuilder.buildMessage(commandAction.getParameters());
-        mComInterfaceManager.sendMessage(message, uuid, commandAction.getAction());
+        mComInterfaceManager.sendMessage(message, uuid);
     }
 
     private void sendOutputResponse(String response, String responseUUID, String responseType) {
@@ -50,7 +48,7 @@ public class OutputActionProcessor implements ActionProcessor {
         responseParameters.put("message", response);
         MessageBuilder responseMessageBuilder = getMessageBuilderForAction(responseType);
         String responseMessage = responseMessageBuilder.buildMessage(responseParameters);
-        mComInterfaceManager.sendMessage(responseMessage, responseUUID, responseType);
+        mComInterfaceManager.sendMessage(responseMessage, responseUUID);
     }
 
     private MessageBuilder getMessageBuilderForAction(String action) {

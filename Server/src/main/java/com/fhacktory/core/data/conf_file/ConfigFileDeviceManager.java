@@ -21,13 +21,14 @@ import java.util.TreeMap;
 @Singleton
 public class ConfigFileDeviceManager implements DeviceManager {
 
-    private Map<String, OutputDevice> mOutputDeviceMap;
+    private volatile Map<String, OutputDevice> mOutputDeviceMap;
+
     public ConfigFileDeviceManager() {
         mOutputDeviceMap = new TreeMap<>();
         loadData();
     }
 
-    public void loadData() {
+    public synchronized void loadData() {
         mOutputDeviceMap = new TreeMap<>();
         Gson gson = new Gson();
         ClassLoader classLoader = getClass().getClassLoader();
@@ -46,7 +47,7 @@ public class ConfigFileDeviceManager implements DeviceManager {
     }
 
     @Override
-    public void setCapabilities(String uuid, List<String> capabilities) {
+    public synchronized void setCapabilities(String uuid, List<String> capabilities) {
        if(mOutputDeviceMap.containsKey(uuid)) {
            mOutputDeviceMap.get(uuid).setCapabilities(capabilities);
        }

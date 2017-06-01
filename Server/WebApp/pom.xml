@@ -3,45 +3,50 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <artifactId>jarvisette_webapp</artifactId>
-    <groupId>com.fhacktory</groupId>
-    <version>1.0</version>
-    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.fhacktory.jarvisette</groupId>
+        <artifactId>jarvisette</artifactId>
+        <version>1.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
+    <artifactId>webapp</artifactId>
+
+    <modelVersion>4.0.0</modelVersion>
 
     <dependencies>
         <dependency>
-            <groupId>com.fhacktory</groupId>
-            <artifactId>input_text</artifactId>
+            <groupId>com.fhacktory.jarvisette</groupId>
+            <artifactId>input_text_plugin</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.fhacktory</groupId>
+            <groupId>com.fhacktory.jarvisette</groupId>
             <artifactId>input_audio_plugin</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.fhacktory</groupId>
-            <artifactId>output_lights</artifactId>
+            <groupId>com.fhacktory.jarvisette</groupId>
+            <artifactId>output_light_plugin</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.fhacktory</groupId>
-            <artifactId>output_text</artifactId>
+            <groupId>com.fhacktory.jarvisette</groupId>
+            <artifactId>output_text_plugin</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.fhacktory</groupId>
-            <artifactId>output_tts</artifactId>
+            <groupId>com.fhacktory.jarvisette</groupId>
+            <artifactId>output_audio_plugin</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.fhacktory</groupId>
-            <artifactId>jarvisette_server_core</artifactId>
+            <groupId>com.fhacktory.jarvisette</groupId>
+            <artifactId>core</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.fhacktory</groupId>
+            <groupId>com.fhacktory.jarvisette</groupId>
             <artifactId>api_ai_action_detector</artifactId>
             <version>1.0</version>
         </dependency>
@@ -83,7 +88,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>jarvisette</finalName>
+                            <finalName>jarvisette_webapp</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>

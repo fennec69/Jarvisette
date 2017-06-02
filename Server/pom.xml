@@ -20,6 +20,7 @@
         <module>Output/Lights</module>
         <module>Output/Text</module>
         <module>WebApp</module>
+        <module>HotwordDetector</module>
     </modules>
 
 </project>

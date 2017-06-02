@@ -47,6 +47,11 @@
         </dependency>
         <dependency>
             <groupId>com.fhacktory.jarvisette</groupId>
+            <artifactId>hotword_detector</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fhacktory.jarvisette</groupId>
             <artifactId>api_ai_action_detector</artifactId>
             <version>1.0</version>
         </dependency>

@@ -18,7 +18,9 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        InjectionModule injectionModule = new InjectionModule();
+        Test test = new Test();
+        test.start();
+      /*  InjectionModule injectionModule = new InjectionModule();
         Injector injector = Guice.createInjector(injectionModule);
         GuiceManager.injector = injector;
 
@@ -39,7 +41,7 @@ public class Main {
         websocketConfigurator.addEnpoints(wscontainer);
 
         server.start();
-        server.join();
+        server.join();*/
     }
 
 }

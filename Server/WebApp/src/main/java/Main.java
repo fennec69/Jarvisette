@@ -1,3 +1,14 @@
+import com.fhacktory.core.GuiceManager;
+import com.fhacktory.core.com.WebsocketConfigurator;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.websocket.jsr356.server.ServerContainer;
+import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
+import org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener;
+import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
+
 /**
  * Created by farid on 13/05/2017.
  */
@@ -7,9 +18,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        HotwordDetector hotwordDetector = new HotwordDetector();
-        hotwordDetector.startDetection();
-      /*  InjectionModule injectionModule = new InjectionModule();
+        InjectionModule injectionModule = new InjectionModule();
         Injector injector = Guice.createInjector(injectionModule);
         GuiceManager.injector = injector;
 
@@ -30,7 +39,7 @@ public class Main {
         websocketConfigurator.addEnpoints(wscontainer);
 
         server.start();
-        server.join();*/
+        server.join();
     }
 
 }

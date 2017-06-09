@@ -2,81 +2,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <parent>
-        <groupId>com.fhacktory.jarvisette</groupId>
         <artifactId>jarvisette</artifactId>
+        <groupId>com.fhacktory.jarvisette</groupId>
         <version>1.0</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
-
-    <artifactId>webapp</artifactId>
-
     <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>snowboy_hotword_detector</artifactId>
 
     <dependencies>
         <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
             <groupId>com.fhacktory.jarvisette</groupId>
-            <artifactId>input_text_plugin</artifactId>
+            <artifactId>utils</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.fhacktory.jarvisette</groupId>
-            <artifactId>input_audio_plugin</artifactId>
+            <artifactId>common</artifactId>
             <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fhacktory.jarvisette</groupId>
-            <artifactId>output_light_plugin</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fhacktory.jarvisette</groupId>
-            <artifactId>output_text_plugin</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fhacktory.jarvisette</groupId>
-            <artifactId>output_audio_plugin</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fhacktory.jarvisette</groupId>
-            <artifactId>core</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fhacktory.jarvisette</groupId>
-            <artifactId>snowboy_hotword_detector</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fhacktory.jarvisette</groupId>
-            <artifactId>api_ai_action_detector</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fhacktory.jarvisette</groupId>
-            <artifactId>google_speech</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>4.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-multibindings</artifactId>
-            <version>4.1.0</version>
         </dependency>
     </dependencies>
-
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>resources</directory>
             </resource>
         </resources>
         <plugins>
@@ -92,13 +48,13 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>Main</mainClass>
+                                    <mainClass>com.fhacktory.hotword_detector.SnowboyHotwordDetector</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>jarvisette_webapp</finalName>
+                            <finalName>hotword_detector</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
@@ -115,13 +71,6 @@
                             <goal>compile</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>testCompile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
                 </executions>
                 <configuration>
                     <source>1.7</source>
@@ -130,5 +79,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

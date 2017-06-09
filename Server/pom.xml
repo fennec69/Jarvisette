@@ -13,6 +13,7 @@
         <module>Common</module>
         <module>Utils</module>
         <module>ApiAiActionDetector</module>
+        <module>GoogleSpeech</module>
         <module>Core</module>
         <module>Input/Audio</module>
         <module>Input/Text</module>
@@ -21,6 +22,7 @@
         <module>Output/Text</module>
         <module>WebApp</module>
         <module>HotwordDetector</module>
+        <module>Input/RawAudio</module>
     </modules>
 
 </project>

@@ -7,6 +7,7 @@ import com.fhacktory.input.audio.command.AudioSignalDto;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import org.apache.commons.codec.binary.Base64;
 
 import java.nio.ByteBuffer;
 import java.util.*;
@@ -28,21 +29,23 @@ public class RawAudioMessageProcessor implements InputMessageProcessor {
 
     private Gson mGson;
     private Timer mTimer;
-    private volatile Map<String, ExipirableBuffer> mInputMap;
+    private volatile Map<String, ExpirableBuffer> mInputMap;
 
     public RawAudioMessageProcessor() {
         mTimer = new Timer();
         mInputMap = new TreeMap<>();
+        mGson = new Gson();
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 long currentTime = Calendar.getInstance().getTimeInMillis();
-                for(String uuid : mInputMap.keySet()) {
-                    ExipirableBuffer exipirableBuffer = mInputMap.get(uuid);
-                    if(exipirableBuffer.getLastUpdateTime() < currentTime - INPUT_COMMAND_DELAY_IN_MS) {
+                for (String uuid : mInputMap.keySet()) {
+                    ExpirableBuffer expirableBuffer = mInputMap.get(uuid);
+                    if (expirableBuffer.getLastUpdateTime() < currentTime - INPUT_COMMAND_DELAY_IN_MS) {
                         AudioSignalDto audioSignalDto = new AudioSignalDto();
-                        audioSignalDto.setResponseType(exipirableBuffer.getResponseType());
-                        audioSignalDto.setResponseUUID(exipirableBuffer.getResponseUUID());
+                        audioSignalDto.setResponseType(expirableBuffer.getResponseType());
+                        audioSignalDto.setResponseUUID(expirableBuffer.getResponseUUID());
+                        audioSignalDto.setSignal(Base64.encodeBase64String(expirableBuffer.getByteBuffer().array()));
                         mAudioMessageProcessor.process(mGson.toJson(audioSignalDto), uuid);
                         mInputMap.remove(uuid);
                     }
@@ -54,22 +57,21 @@ public class RawAudioMessageProcessor implements InputMessageProcessor {
     @Override
     public synchronized void process(String message, String inputUuid) {
         RawAudioSignalDto dto = mGson.fromJson(message, RawAudioSignalDto.class);
-        if(!mInputMap.containsKey(inputUuid) && mHotwordDetector.isHotwordDetected(dto.getRawSignal())) {
-            mInputMap.put(inputUuid, new ExipirableBuffer(dto.getResponseType(), dto.getResponseUUID()));
-        }
-        else {
-            ExipirableBuffer exipirableBuffer = mInputMap.get(inputUuid);
-            exipirableBuffer.addBytes(dto.getRawSignal());
+        if (!mInputMap.containsKey(inputUuid) && mHotwordDetector.isHotwordDetected(dto.getRawSignal())) {
+            mInputMap.put(inputUuid, new ExpirableBuffer(dto.getResponseType(), dto.getResponseUUID()));
+        } else {
+            ExpirableBuffer expirableBuffer = mInputMap.get(inputUuid);
+            expirableBuffer.addBytes(dto.getRawSignal());
         }
     }
 
-    private class ExipirableBuffer {
+    private class ExpirableBuffer {
         private volatile long mLastUpdateTime;
         private volatile ByteBuffer mByteBuffer;
         private String mResponseType;
         private String mResponseUUID;
 
-        public ExipirableBuffer(String responseType, String responseUUID) {
+        public ExpirableBuffer(String responseType, String responseUUID) {
             this.mResponseType = responseType;
             this.mResponseUUID = responseUUID;
             mLastUpdateTime = Calendar.getInstance().getTimeInMillis();

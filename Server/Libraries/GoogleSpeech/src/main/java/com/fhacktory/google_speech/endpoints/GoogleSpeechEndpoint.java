@@ -14,6 +14,6 @@ import retrofit2.http.POST;
 public interface GoogleSpeechEndpoint {
 
     @Headers("Content-Type: application/json")
-    @POST("v1/speech:recognize?key=AIzaSyCzdjkc0Zj_A9csp7nLbDKHvjiHKTA3t_M")
+    @POST("v1/speech:recognize?key=AIzaSyAtdIOzV-koKwReTsDz7SvsM6sV8MgbfoU")
     Call<GoogleSpeechResponseDto> getSpeechRecognitions(@Body GoogleSpeechRequestDto dto);
 }

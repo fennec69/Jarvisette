@@ -3,6 +3,7 @@ package com.fhacktory.hotword_detector;
 import ai.kitt.snowboy.SnowboyDetect;
 import com.fhacktory.common.HotwordDetector;
 import com.fhacktory.utils.NativeUtils;
+import com.fhacktory.utils.SignalUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
@@ -50,8 +51,7 @@ public class SnowboyHotwordDetector implements HotwordDetector {
     }
 
     public boolean isHotwordDetected(byte[] rawSignal) {
-        short[] snowboyData = new short[1600];
-        ByteBuffer.wrap(rawSignal).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(snowboyData);
+        short[] snowboyData = SignalUtils.byteArrayToShortArray(rawSignal);
         int result = mSnowboyDetect.RunDetection(snowboyData, snowboyData.length);
         return result > 0;
     }

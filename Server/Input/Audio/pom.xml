@@ -45,6 +45,16 @@
             <artifactId>converter-gson</artifactId>
             <version>2.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.fhacktory.jarvisette</groupId>
+            <artifactId>snowboy_hotword_detector</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fhacktory.jarvisette</groupId>
+            <artifactId>google_speech</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

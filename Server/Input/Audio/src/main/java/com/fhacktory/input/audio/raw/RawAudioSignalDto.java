@@ -20,4 +20,16 @@ public class RawAudioSignalDto {
     public String getResponseType() {
         return responseType;
     }
+
+    public void setRawSignal(byte[] rawSignal) {
+        this.rawSignal = rawSignal;
+    }
+
+    public void setResponseUUID(String responseUUID) {
+        this.responseUUID = responseUUID;
+    }
+
+    public void setResponseType(String responseType) {
+        this.responseType = responseType;
+    }
 }

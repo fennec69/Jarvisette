@@ -10,5 +10,6 @@ import java.util.List;
  */
 public interface DeviceManager {
     void setCapabilities(String uuid, List<String> capabilities);
+    void addDevice(String uuid);
     Collection<OutputDevice> getAll();
 }

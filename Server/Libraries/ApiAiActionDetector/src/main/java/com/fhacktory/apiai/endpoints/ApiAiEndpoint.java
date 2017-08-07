@@ -12,6 +12,7 @@ import retrofit2.http.POST;
  */
 public interface ApiAiEndpoint {
 
+    //TODO: Pass token in parameter
     @Headers({"Content-Type: application/json; charset=utf-8", "Authorization: Bearer 9a7ab761c87f4c939c6a74469fc0edc0"})
     @POST("v1/query?v=20150910")
     Call<ApiAiResponseDto> getAction(@Body ApiAiRequestDto dto);

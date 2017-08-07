@@ -37,6 +37,11 @@ public class OutputDevice {
         return mUUID;
     }
 
+    public double matchingLocation(Location location) {
+        if(location == null || mLocation == null) return 0;
+        else return mLocation.matching(location);
+    }
+
     public boolean hasCapability(String capability) {
         for(String tmpCap : mCapabilities) {
             if(tmpCap.equals(capability)) return true;

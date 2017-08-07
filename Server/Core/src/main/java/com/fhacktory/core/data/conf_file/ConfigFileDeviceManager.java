@@ -35,10 +35,10 @@ public class ConfigFileDeviceManager implements DeviceManager {
         InputStream fileInputStream = classLoader.getResourceAsStream("devices.json");
         BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
         ConfFileDto confFileDto = gson.fromJson(reader, ConfFileDto.class);
-        for(OutputDeviceDto outputDeviceDto : confFileDto.getOutputs()) {
+        for (OutputDeviceDto outputDeviceDto : confFileDto.getOutputs()) {
             OutputDevice outputDevice = new OutputDevice(outputDeviceDto.getUuid());
             Location location = new Location();
-            for(LocationDto locationDto : outputDeviceDto.getLocations()) {
+            for (LocationDto locationDto : outputDeviceDto.getLocations()) {
                 location.addLocation(locationDto.getUuid(), locationDto.getIntensity());
             }
             outputDevice.setAudioLocation(location);
@@ -48,9 +48,13 @@ public class ConfigFileDeviceManager implements DeviceManager {
 
     @Override
     public synchronized void setCapabilities(String uuid, List<String> capabilities) {
-       if(mOutputDeviceMap.containsKey(uuid)) {
-           mOutputDeviceMap.get(uuid).setCapabilities(capabilities);
-       }
+        if (!mOutputDeviceMap.containsKey(uuid)) addDevice(uuid);
+        mOutputDeviceMap.get(uuid).setCapabilities(capabilities);
+    }
+
+    @Override
+    public void addDevice(String uuid) {
+        mOutputDeviceMap.put(uuid, new OutputDevice(uuid));
     }
 
     @Override

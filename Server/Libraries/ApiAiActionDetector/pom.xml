@@ -7,7 +7,7 @@
         <groupId>com.fhacktory.jarvisette</groupId>
         <artifactId>jarvisette</artifactId>
         <version>1.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>api_ai_action_detector</artifactId>

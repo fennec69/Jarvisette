@@ -29,7 +29,7 @@ public class OutputActionProcessor implements ActionProcessor {
     public void processOutput(CommandAction commandAction, Location location) {
         OutputDevice closestDevice = findClosestOutputDevice(location, commandAction.getAction());
         String responseUuid = commandAction.getResponseUuid();
-        if(responseUuid == null) {
+        if(responseUuid == null || responseUuid.isEmpty()) {
             OutputDevice closestResponseDevice = findClosestOutputDevice(location, commandAction.getResponseType());
            if(closestResponseDevice != null) responseUuid = closestResponseDevice.getUUID();
         }
@@ -60,7 +60,7 @@ public class OutputActionProcessor implements ActionProcessor {
         double currentMatching = 0;
         for (OutputDevice outputDevice : mDeviceManager.getAll()) {
             if (outputDevice.hasCapability(capability)) {
-                double matching = outputDevice.getAudioLocation().matching(location);
+                double matching = outputDevice.matchingLocation(location);
                 if (matching >= currentMatching) {
                     result = outputDevice;
                     currentMatching = matching;

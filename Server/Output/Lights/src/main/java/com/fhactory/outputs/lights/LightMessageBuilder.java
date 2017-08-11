@@ -16,7 +16,7 @@ public class LightMessageBuilder implements MessageBuilder {
     public String buildMessage(Map<String, String> parameters) {
         Gson gson = new Gson();
         if(parameters.containsKey(POWER_PARAM)) {
-            LightMessageDto lightMessageDto = new LightMessageDto(Boolean.valueOf(parameters.get(POWER_PARAM)));
+            LightMessageDto lightMessageDto = new LightMessageDto(String.valueOf(parameters.get(POWER_PARAM)));
             return gson.toJson(lightMessageDto);
         }
         return null;
@@ -26,9 +26,9 @@ public class LightMessageBuilder implements MessageBuilder {
         private String action;
         private boolean power;
 
-        public LightMessageDto(boolean power) {
+        public LightMessageDto(String power) {
             this.action = ActionType.LIGHT;
-            this.power = power;
+            this.power = power.equals("on");
         }
     }
 }

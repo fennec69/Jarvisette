@@ -17,11 +17,11 @@ public class OutputDevice {
         mCapabilities = new ArrayList<>();
     }
 
-    public Location getAudioLocation() {
+    public Location getLocation() {
         return mLocation;
     }
 
-    public void setAudioLocation(Location location) {
+    public void setLocation(Location location) {
         mLocation = location;
     }
 

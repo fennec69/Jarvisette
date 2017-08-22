@@ -2,7 +2,7 @@ package com.fhacktory.core.data.conf_file;
 
 import com.fhacktory.core.DeviceManager;
 import com.fhacktory.core.data.conf_file.dtos.ConfFileDto;
-import com.fhacktory.core.data.conf_file.dtos.LocationDto;
+import com.fhacktory.core.com.LocationDto;
 import com.fhacktory.core.data.conf_file.dtos.OutputDeviceDto;
 import com.fhacktory.data.Location;
 import com.fhacktory.data.OutputDevice;
@@ -38,10 +38,8 @@ public class ConfigFileDeviceManager implements DeviceManager {
         for (OutputDeviceDto outputDeviceDto : confFileDto.getOutputs()) {
             OutputDevice outputDevice = new OutputDevice(outputDeviceDto.getUuid());
             Location location = new Location();
-            for (LocationDto locationDto : outputDeviceDto.getLocations()) {
-                location.addLocation(locationDto.getUuid(), locationDto.getIntensity());
-            }
-            outputDevice.setAudioLocation(location);
+            location.setLocations(outputDeviceDto.getLocations());
+            outputDevice.setLocation(location);
             mOutputDeviceMap.put(outputDevice.getUUID(), outputDevice);
         }
     }
@@ -50,6 +48,16 @@ public class ConfigFileDeviceManager implements DeviceManager {
     public synchronized void setCapabilities(String uuid, List<String> capabilities) {
         if (!mOutputDeviceMap.containsKey(uuid)) addDevice(uuid);
         mOutputDeviceMap.get(uuid).setCapabilities(capabilities);
+        System.out.println(String.format("Capabilities set for %s: %s", uuid, capabilities));
+    }
+
+    @Override
+    public synchronized void setLocations(String uuid, Map<String, Float> locations) {
+        if (!mOutputDeviceMap.containsKey(uuid)) addDevice(uuid);
+        Location location = new Location();
+        location.setLocations(locations);
+        mOutputDeviceMap.get(uuid).setLocation(location);
+        System.out.println(String.format("Location set for %s: %s", uuid, locations));
     }
 
     @Override

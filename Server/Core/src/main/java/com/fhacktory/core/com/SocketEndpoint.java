@@ -48,20 +48,24 @@ public class SocketEndpoint implements ComInterface, WebsocketEndpoint {
         String uuid = session.getPathParameters().get("uuid");
         if (mGson == null) mGson = new Gson();
         InputMessageDto inputMessageDto = mGson.fromJson(message, InputMessageDto.class);
-        if(inputMessageDto != null && inputMessageDto.getType() != null) {
-            if(inputMessageDto.getType() == MessageType.REGISTERING) {
-               register(mGson.toJson(inputMessageDto.getMessage()), uuid);
-            }
-            else {
-                InputMessageProcessor inputMessageProcessor = mInputMessageProcessorMap.get(inputMessageDto.getType());
-                inputMessageProcessor.process(mGson.toJson(inputMessageDto.getMessage()), uuid);
+        String contentMessage = mGson.toJson(inputMessageDto.getMessage());
+        if (inputMessageDto != null && inputMessageDto.getType() != null) {
+            switch (inputMessageDto.getType()) {
+                case REGISTERING:
+                    ServiceRegisterDto serviceRegisterDto = mGson.fromJson(contentMessage, ServiceRegisterDto.class);
+                    mDeviceManager.setCapabilities(uuid, serviceRegisterDto.getServices());
+                    break;
+                case LOCATION:
+                    LocationDto locationDto = mGson.fromJson(contentMessage, LocationDto.class);
+                    mDeviceManager.setLocations(uuid, locationDto.getLocations());
+                    break;
+                default:
+                    InputMessageProcessor inputMessageProcessor = mInputMessageProcessorMap.get(inputMessageDto.getType());
+                    inputMessageProcessor.process(mGson.toJson(inputMessageDto.getMessage()), uuid);
+                    break;
+
             }
         }
-    }
-
-    private void register(String message, String uuid) {
-        ServiceRegisterDto serviceRegisterDto = mGson.fromJson(message, ServiceRegisterDto.class);
-        mDeviceManager.setCapabilities(uuid, serviceRegisterDto.getServices());
     }
 
     @OnClose
@@ -75,7 +79,7 @@ public class SocketEndpoint implements ComInterface, WebsocketEndpoint {
 
     @Override
     public void sendMessage(String message, String uuid) {
-        if(sessions.containsKey(uuid)) {
+        if (sessions.containsKey(uuid)) {
             Session session = sessions.get(uuid);
             session.getAsyncRemote().sendText(message);
         }

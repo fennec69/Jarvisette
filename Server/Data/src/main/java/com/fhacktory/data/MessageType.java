@@ -7,5 +7,6 @@ public enum MessageType {
     RAW_AUDIO,
     AUDIO_COMMAND,
     TEXT_COMMAND,
-    REGISTERING
+    REGISTERING,
+    LOCATION
 }

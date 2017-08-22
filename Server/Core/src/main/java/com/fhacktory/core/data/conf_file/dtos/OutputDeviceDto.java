@@ -1,6 +1,6 @@
 package com.fhacktory.core.data.conf_file.dtos;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by farid on 14/05/2017.
@@ -8,13 +8,13 @@ import java.util.List;
 public class OutputDeviceDto {
     
     private String uuid;
-    private List<LocationDto> locations;
+    private Map<String, Float> locations;
 
     public String getUuid() {
         return uuid;
     }
 
-    public List<LocationDto> getLocations() {
+    public Map<String, Float> getLocations() {
         return locations;
     }
 }

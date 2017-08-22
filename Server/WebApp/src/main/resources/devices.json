@@ -1,32 +1,18 @@
 {
   "outputs": [
     {
-      "uuid": "RASP-JARB-1",
-      "locations": [
-        {"uuid": "Samysamsung", "intensity": 100},
-        {"uuid": "Motobruhbruhbruh", "intensity": 0}
-      ]
-    },
-    {
       "uuid": "RASP-JARB-3",
-      "locations": [
-        {"uuid": "Samysamsung", "intensity": 0},
-        {"uuid": "Motobruhbruhbruh", "intensity": 100}
-      ]
+      "locations": {
+        "Samysamsung": 0,
+        "Motobruhbruhbruh": 100
+      }
     },
     {
       "uuid": "RASP-JARB-2",
-      "locations": [
-        {"uuid": "Samysamsung", "intensity": 85},
-        {"uuid": "Motobruhbruhbruh", "intensity": 15}
-      ]
-    },
-    {
-      "uuid": "R930",
-      "locations": [
-        {"uuid": "Samysamsung", "intensity": 100},
-        {"uuid": "Motobruhbruhbruh", "intensity": 0}
-      ]
+      "locations": {
+        "Samysamsung": 85,
+        "Motobruhbruhbruh": 15
+      }
     }
   ]
 }

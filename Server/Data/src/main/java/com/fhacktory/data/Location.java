@@ -22,6 +22,10 @@ public class Location {
         return mLocations;
     }
 
+    public void setLocations(Map<String, Float> locations) {
+        mLocations = locations;
+    }
+
     public double matching(Location location) {
         if(location == null) return 0;
         Map<String, Float> tmpMap = new TreeMap<String, Float>(location.getLocations());

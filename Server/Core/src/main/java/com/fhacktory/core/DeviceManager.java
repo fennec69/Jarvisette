@@ -12,4 +12,5 @@ public interface DeviceManager {
     void setCapabilities(String uuid, List<String> capabilities);
     void addDevice(String uuid);
     Collection<OutputDevice> getAll();
+    void removeDevice(String uuid);
 }

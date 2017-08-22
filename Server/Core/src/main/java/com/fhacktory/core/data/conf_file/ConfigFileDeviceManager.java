@@ -61,4 +61,9 @@ public class ConfigFileDeviceManager implements DeviceManager {
     public Collection<OutputDevice> getAll() {
         return mOutputDeviceMap.values();
     }
+
+    @Override
+    public void removeDevice(String uuid) {
+        mOutputDeviceMap.remove(uuid);
+    }
 }

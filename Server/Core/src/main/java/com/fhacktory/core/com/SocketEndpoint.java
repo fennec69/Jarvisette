@@ -70,6 +70,7 @@ public class SocketEndpoint implements ComInterface, WebsocketEndpoint {
         System.out.println("Input module disconnected " + uuid);
         sessions.remove(uuid);
         mComInterfaceManager.unregister(uuid);
+        mDeviceManager.removeDevice(uuid);
     }
 
     @Override
